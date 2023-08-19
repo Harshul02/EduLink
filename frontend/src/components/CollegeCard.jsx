@@ -17,8 +17,6 @@ const CollegeCard = ({ collegeData, handleClick }) => {
         <h5 className="card-title">{collegeData.collegeName}</h5>
         <h6 className="card-subtitle mb-2 text-muted">{collegeData.collegeType}</h6>
         <p className="card-text">{aboutText}</p>
-        {/* <a href="#" className="card-link">Card link</a> */}
-        {/* <a href="#" className="card-link">Another link</a> */}
       </div>
     </div>
   );

@@ -19,11 +19,9 @@ const CompanyPage = () => {
   const findUser = async() =>{
     try{
       const token = localStorage.getItem("companytoken");
-      // console.log(token);
       const data = await axios.post("/api/company/findcompany", {token});
       const companyData = data.data.data;
       setCompany(companyData);
-      // console.log(companyData);
       if (companyData.firstLogin) {
         setShowModal(true); 
       }
@@ -131,7 +129,7 @@ const CompanyPage = () => {
       )}
 
     </div>
-    {/* // </div> */}
+    
     </>
   );
 };

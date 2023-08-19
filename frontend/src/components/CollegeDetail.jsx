@@ -21,7 +21,6 @@ const CollegeDetail = (props) => {
       console.log(values);
       props.setModal(false);
       const response = await axios.post("/api/college/savedetails", values);
-        // console.log(response.data.message);
       if(response.data.success)
       {
           toast.success(response.data.message);

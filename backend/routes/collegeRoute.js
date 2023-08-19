@@ -160,15 +160,6 @@ router.post("/getcompanydata", async(req,res)=>{
     res.status(500).json({ message: "Server Error" });
   }
 })
-// router.post("/getcompanydata", async(req,res)=>{
-//   try{
-//     const companyData = await Company.find();
-//     console.log(companyData);
-//     res.status(200).send({data: companyData});
-//   }
-//   catch(error){
-//     return res.status(500).send({data: error.message});
-//   }
-// })
+
 
   module.exports = router;
