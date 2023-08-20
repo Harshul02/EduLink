@@ -60,16 +60,6 @@ const CompanyPage = () => {
 
                 <CollegeDetail setModal={setShowModal}/>
               </div>
-              {/* <div className="modal-footer"> */}
-                {/* <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button> */}
-                {/* You can add more buttons or actions here if needed */}
-              {/* </div> */}
             </div>
           </div>
         </div>

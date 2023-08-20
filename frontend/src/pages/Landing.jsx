@@ -1,8 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {motion as m} from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const navigate = useNavigate();
+  const handleLogout = (event) => {
+    event.preventDefault();
+    if (localStorage.getItem("collegetoken")) {
+      localStorage.removeItem("collegetoken");
+      navigate("/collegelogin");
+    } else if (localStorage.getItem("companytoken")) {
+      localStorage.removeItem("companytoken");
+      navigate("/companylogin");
+    }
+  };
+  const handleLogin = () => {
+    if (!localStorage.getItem("collegetoken")) {
+      navigate("/collegelogin");
+    } else if (!localStorage.getItem("companytoken")) {
+      navigate("/companylogin");
+    }
+  };
+  const isCollegeLoggedIn = localStorage.getItem("collegetoken");
+  const isCompanyLoggedIn = localStorage.getItem("companytoken");
 
   return (
     <>
@@ -51,15 +72,29 @@ const Landing = () => {
                   </a>
                 </li>
               </ul>
-              <div className="dropdown">
-  <button className="btn btn-brand ms-lg-3  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-t aria-expanded="false">
-    LOGIN
-  </button>
-</div>
-
-{/* <Link to="#" className="btn btn-brand ms-lg-3">
-                Download
-              </Link> */}
+              
+              {localStorage.getItem("collegetoken") || localStorage.getItem("companytoken") ? (
+            <button
+              className="btn btn-brand ms-lg-3"
+              type="button"
+              id="dropdownMenuButton1"
+              aria-expanded="false"
+              onClick={handleLogout}
+              style={{ backgroundColor: "red", color: "white" }}
+            >
+              LOGOUT
+            </button>
+          ) : (
+            <button
+              className="btn btn-brand ms-lg-3"
+              type="button"
+              id="dropdownMenuButton1"
+              aria-expanded="false"
+              onClick={handleLogin}
+            >
+              LOGIN
+            </button>
+          )}
             </div>
           </div>
         </nav>
@@ -81,33 +116,39 @@ const Landing = () => {
                   Where Education Meets Opportunity
                 </h5>
                 <div data-aos="fade-up" data-aos-delay="50">
+              
+              {(isCollegeLoggedIn && !isCompanyLoggedIn) ||
+          (!isCollegeLoggedIn && !isCompanyLoggedIn) ? (
+             <Link to="/collegelogin" className="btn btn-brand me-2">
+              {isCollegeLoggedIn ? "Dashboard" : "College Login"}
+             </Link>
+            ) : (
+           
+             <Link
+             to="/collegelogin"
+             className="btn btn-brand me-2 disabled" // Apply "disabled" class
+             disabled
+           >
+             College Login
+           </Link>
+          )}
 
-
-                {/* {companyisAuthenticated ? (
-      <button className="btn btn-brand me-2" disabled style={{ backgroundColor: '#007bff', color: 'white', cursor: 'not-allowed' }}>
-        College Login
-      </button>
-    ) : (
-      <Link to="/collegelogin" className="btn btn-brand me-2">
-        College Login
-      </Link>
-    )} */}
-    <Link to="/collegelogin" className="btn btn-brand me-2">
-        College Login
-      </Link>
-    
-                 {/* {isAuthenticated ? (
-      <button className="btn btn-brand me-2" disabled style={{ backgroundColor: '#007bff', color: 'white', cursor: 'not-allowed' }}>
-        Company Login
-      </button>
-    ) : (
-      <Link to="/companylogin" className="btn btn-brand me-2">
-        Company Login
-      </Link>
-    )}  */}
-    <Link to="/companylogin" className="btn btn-brand me-2">
-        Company Login
-      </Link>  
+          {(isCompanyLoggedIn && !isCollegeLoggedIn) ||
+          (!isCollegeLoggedIn && !isCompanyLoggedIn) ? (
+             <Link to="/companylogin" className="btn btn-brand me-2">
+             {isCompanyLoggedIn ? "Dashboard" : "Company Login"}
+           </Link>
+           
+          ) : (
+             <Link
+              to="/companylogin"
+              className="btn btn-brand me-2 disabled" // Apply "disabled" class
+              disabled
+            >
+              Company Login
+            </Link>
+           
+          )}
                 
                 </div>
               </div>
@@ -228,328 +269,7 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* <section id="portfolio" className="section-padding">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-12 text-center"
-                data-aos="fade-down"
-                data-aos-delay="150"
-              >
-                <div className="section-title">
-                  <h1 className="display-4 fw-semibold">Our Portfolio</h1>
-                  <div className="line"></div>
-                  <p>
-                    We love to craft digital experiances for brands rather than
-                    crap and more lorem ipsums and do crazy skills
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="row g-4">
-              <div className="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                <div className="portfolio-item image-zoom">
-                  <div className="image-zoom-wrapper">
-                    <img src="./assets/images/project-1.jpg" alt="" />
-                  </div>
-                  <a
-                    to="./assets/images/project-1.jpg"
-                    data-fancybox="gallery"
-                    className="iconbox"
-                  >
-                    <i className="ri-search-2-line"></i>
-                  </a>
-                </div>
-                <div className="portfolio-item image-zoom mt-4">
-                  <div className="image-zoom-wrapper">
-                    <img src="./assets/images/project-2.jpg" alt="" />
-                  </div>
-                  <a
-                    to="./assets/images/project-2.jpg"
-                    data-fancybox="gallery"
-                    className="iconbox"
-                  >
-                    <i className="ri-search-2-line"></i>
-                  </a>
-                </div>
-              </div>
-              <div className="col-md-4" data-aos="fade-down" data-aos-delay="250">
-                <div className="portfolio-item image-zoom">
-                  <div className="image-zoom-wrapper">
-                    <img src="./assets/images/project-3.jpg" alt="" />
-                  </div>
-                  <a
-                    to="./assets/images/project-3.jpg"
-                    data-fancybox="gallery"
-                    className="iconbox"
-                  >
-                    <i className="ri-search-2-line"></i>
-                  </a>
-                </div>
-                <div className="portfolio-item image-zoom mt-4">
-                  <div className="image-zoom-wrapper">
-                    <img src="./assets/images/project-4.jpg" alt="" />
-                  </div>
-                  <a
-                    to="./assets/images/project-4.jpg"
-                    data-fancybox="gallery"
-                    className="iconbox"
-                  >
-                    <i className="ri-search-2-line"></i>
-                  </a>
-                </div>
-              </div>
-              <div className="col-md-4" data-aos="fade-down" data-aos-delay="350">
-                <div className="portfolio-item image-zoom">
-                  <div className="image-zoom-wrapper">
-                    <img src="./assets/images/project-5.jpg" alt="" />
-                  </div>
-                  <a
-                    to="./assets/images/project-5.jpg"
-                    data-fancybox="gallery"
-                    className="iconbox"
-                  >
-                    <i className="ri-search-2-line"></i>
-                  </a>
-                </div>
-                <div className="portfolio-item image-zoom mt-4">
-                  <div className="image-zoom-wrapper">
-                    <img src="./assets/images/project-6.jpg" alt="" />
-                  </div>
-                  <a
-                    to="./assets/images/project-6.jpg"
-                    data-fancybox="gallery"
-                    className="iconbox"
-                  >
-                    <i className="ri-search-2-line"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
-
-        {/* <section id="reviews" className="section-padding bg-light">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-12 text-center"
-                data-aos="fade-down"
-                data-aos-delay="150"
-              >
-                <div className="section-title">
-                  <h1 className="display-4 fw-semibold">Testimonials</h1>
-                  <div className="line"></div>
-                  <p>
-                    We love to craft digital experiances for brands rather than
-                    crap and more lorem ipsums and do crazy skills
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="row gy-5 gx-4">
-              <div
-                className="col-lg-4 col-sm-6"
-                data-aos="fade-down"
-                data-aos-delay="150"
-              >
-                <div className="review">
-                  <div className="review-head p-4 bg-white theme-shadow">
-                    <div className="text-warning">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                    </div>
-                    <p>
-                      Amazing theme ipsum dolor sit amet consectetur adipisicing
-                      elit. AssumendLink eum animi rerum ipsam impedit dicta
-                      voluptatem.
-                    </p>
-                  </div>
-                  <div className="review-person mt-4 d-flex align-items-center">
-                    <img
-                      className="rounded-circle"
-                      src="./assets/images/avatar-1.jpg"
-                      alt=""
-                    />
-                    <div className="ms-3">
-                      <h5>Dianne Russell</h5>
-                      <small>UX Architect</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-sm-6"
-                data-aos="fade-down"
-                data-aos-delay="250"
-              >
-                <div className="review">
-                  <div className="review-head p-4 bg-white theme-shadow">
-                    <div className="text-warning">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                    </div>
-                    <p>
-                      Amazing theme ipsum dolor sit amet consectetur adipisicing
-                      elit. AssumendLink eum animi rerum ipsam impedit dicta
-                      voluptatem.
-                    </p>
-                  </div>
-                  <div className="review-person mt-4 d-flex align-items-center">
-                    <img
-                      className="rounded-circle"
-                      src="./assets/images/avatar-2.jpg"
-                      alt=""
-                    />
-                    <div className="ms-3">
-                      <h5>Dianne Russell</h5>
-                      <small>UX Architect</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-sm-6"
-                data-aos="fade-down"
-                data-aos-delay="350"
-              >
-                <div className="review">
-                  <div className="review-head p-4 bg-white theme-shadow">
-                    <div className="text-warning">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                    </div>
-                    <p>
-                      Amazing theme ipsum dolor sit amet consectetur adipisicing
-                      elit. AssumendLink eum animi rerum ipsam impedit dicta
-                      voluptatem.
-                    </p>
-                  </div>
-                  <div className="review-person mt-4 d-flex align-items-center">
-                    <img
-                      className="rounded-circle"
-                      src="./assets/images/avatar-3.jpg"
-                      alt=""
-                    />
-                    <div className="ms-3">
-                      <h5>Dianne Russell</h5>
-                      <small>UX Architect</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-sm-6"
-                data-aos="fade-down"
-                data-aos-delay="450"
-              >
-                <div className="review">
-                  <div className="review-head p-4 bg-white theme-shadow">
-                    <div className="text-warning">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                    </div>
-                    <p>
-                      Amazing theme ipsum dolor sit amet consectetur adipisicing
-                      elit. AssumendLink eum animi rerum ipsam impedit dicta
-                      voluptatem.
-                    </p>
-                  </div>
-                  <div className="review-person mt-4 d-flex align-items-center">
-                    <img
-                      className="rounded-circle"
-                      src="./assets/images/avatar-4.jpg"
-                      alt=""
-                    />
-                    <div className="ms-3">
-                      <h5>Dianne Russell</h5>
-                      <small>UX Architect</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-sm-6"
-                data-aos="fade-down"
-                data-aos-delay="550"
-              >
-                <div className="review">
-                  <div className="review-head p-4 bg-white theme-shadow">
-                    <div className="text-warning">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                    </div>
-                    <p>
-                      Amazing theme ipsum dolor sit amet consectetur adipisicing
-                      elit. AssumendLink eum animi rerum ipsam impedit dicta
-                      voluptatem.
-                    </p>
-                  </div>
-                  <div className="review-person mt-4 d-flex align-items-center">
-                    <img
-                      className="rounded-circle"
-                      src="./assets/images/avatar-5.jpg"
-                      alt=""
-                    />
-                    <div className="ms-3">
-                      <h5>Dianne Russell</h5>
-                      <small>UX Architect</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-sm-6"
-                data-aos="fade-down"
-                data-aos-delay="650"
-              >
-                <div className="review">
-                  <div className="review-head p-4 bg-white theme-shadow">
-                    <div className="text-warning">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                    </div>
-                    <p>
-                      Amazing theme ipsum dolor sit amet consectetur adipisicing
-                      elit. AssumendLink eum animi rerum ipsam impedit dicta
-                      voluptatem.
-                    </p>
-                  </div>
-                  <div className="review-person mt-4 d-flex align-items-center">
-                    <img
-                      className="rounded-circle"
-                      src="./assets/images/avatar-6.jpg"
-                      alt=""
-                    />
-                    <div className="ms-3">
-                      <h5>Dianne Russell</h5>
-                      <small>UX Architect</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
-
+        
         <section id="team" className="section-padding">
           <div className="container">
             <div className="row">

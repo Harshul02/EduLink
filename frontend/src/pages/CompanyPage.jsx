@@ -25,7 +25,6 @@ const CompanyPage = () => {
       if (companyData.firstLogin) {
         setShowModal(true); 
       }
-      // console.log(showModal);
     }catch(error)
     {
       console.error(error);
