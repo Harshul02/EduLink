@@ -8,7 +8,7 @@ import Chat from './Chat';
 const CollegeList = () => {
   const [collegeDataList, setCollegeDataList] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [selectedCollege, setSelectedCollege] = useState(null);
+  const [selectedCollege, setSelectedCollege] = useState(null)
 
   const getCollegeData = async () => {
     try {
