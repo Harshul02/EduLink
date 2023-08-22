@@ -1,8 +1,6 @@
 // server.js
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-
 const app = express();
 require('dotenv').config();
 const dbConfig = require('./config/db');
@@ -16,10 +14,12 @@ const io = require('socket.io')(server);
 const collegeRoute = require('./routes/collegeRoute');
 const companyRoute = require('./routes/companyRoute');
 const chatRoute = require('./routes/chatRoute');
+const tieupRoute = require('./routes/tieupRoute');
 const ChatMessage = require('./models/ChatMessageModel'); // Import your ChatMessage model
 app.use('/api/college', collegeRoute);
 app.use('/api/company', companyRoute);
 app.use('/api/chat', chatRoute);
+app.use('/api/tieup', tieupRoute);
 
 
 const userSockets = {}; // To store active sockets for each user

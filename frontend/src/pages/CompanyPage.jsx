@@ -120,7 +120,7 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <About />}
-        {selectedItem === 'tieups' && <Tieups />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('companytoken')} />}
         {selectedItem === 'history' && <History />}
         {selectedItem === 'college' && <CollegeList />}
       </div>

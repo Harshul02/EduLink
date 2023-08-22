@@ -99,7 +99,7 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <CollegeAbout />}
-        {selectedItem === 'tieups' && <Tieups />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'history' && <History />}
         {selectedItem === 'company' && <CompanyList />}
       </div>

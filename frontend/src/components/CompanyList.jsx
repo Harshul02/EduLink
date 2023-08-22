@@ -41,6 +41,7 @@ const CompanyList = () => {
             <CompanyCard
               key={companyData._id}
               companyData={companyData}
+              loggedInUserId={localStorage.getItem('collegetoken')}
               handleClick={() => handleCardClick(companyData)}
             />
           ))}

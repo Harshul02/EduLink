@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
 const Chat = ({ userType, loggedInUserId, userId, socket }) => {
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
