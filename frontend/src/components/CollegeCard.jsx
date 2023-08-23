@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
+  const [acceptedstatus, setAcceptedStatus] = useState("");
+
+  useEffect(() => {
+    async function fetchTieUpStatus() {
+      try {
+        const response = await axios.get(`/api/tieup/statuscheck/${loggedInUserId}/${collegeData._id}`);
+        
+        if (response.data.success===true) {
+          const tieUpStatus = response.data.accepted;
+          if (tieUpStatus === true) {
+            setAcceptedStatus("Accepted");
+          } else if (tieUpStatus === false) {
+            setAcceptedStatus("Request Sent...");
+        } 
+        
+       }else {
+          setAcceptedStatus("Connect");
+        }
+      } catch (error) {
+        console.error('Error fetching tie-up status:', error);
+      }
+    }
+
+    fetchTieUpStatus();
+  }, [loggedInUserId, collegeData._id]);
 
   const aboutText =
     collegeData.collegeDetail?.about && collegeData.collegeDetail.about.length > 100
@@ -19,6 +44,7 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
 
       if (response.data.success) {
         console.log('Tie-up request sent successfully');
+        setAcceptedStatus("Request Sent...");
       } else {
         console.error('Failed to send tie-up request');
       }
@@ -38,7 +64,12 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
   style={{
     padding: '10px 20px',
     fontSize: '16px',
-    backgroundColor: '#007bff',
+    backgroundColor:
+      acceptedstatus === "Request Sent..."
+        ? 'yellow' 
+        : acceptedstatus === "Accepted"
+        ? 'green' 
+        : '#007bff',
     color: '#fff',
     border: 'none',
     borderRadius: '4px',
@@ -46,16 +77,10 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
     transition: 'background-color 0.2s',
   }}
 >
-  Connect
+  {acceptedstatus}
 </button>
 
-
-
-
-
-
       </div>
-      
     </div>
   );
 };

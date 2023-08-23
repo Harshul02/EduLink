@@ -1,9 +1,36 @@
 import React from 'react'
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
 
-    const aboutText =
+  const [acceptedstatuscompany, setAcceptedcompany] = useState("");
+  useEffect(() => {
+    async function fetchTieUpStatus() {
+      try {
+        const response = await axios.get(`/api/tieup/statuscheck/${loggedInUserId}/${companyData._id}`);
+        
+        if (response.data.success===true) {
+          const tieUpStatus = response.data.accepted;
+          if (tieUpStatus === true) {
+            setAcceptedcompany("Accepted");
+          } else if (tieUpStatus === false) {
+            setAcceptedcompany("Request Sent...");
+        } 
+        
+       }else {
+        setAcceptedcompany("Connect");
+        }
+      } catch (error) {
+        console.error('Error fetching tie-up status:', error);
+      }
+    }
+
+    fetchTieUpStatus();
+  }, [loggedInUserId, companyData._id]);
+  
+  
+  const aboutText =
     companyData.companyDetail?.about && companyData.companyDetail.about.length > 100
       ? companyData.companyDetail.about.slice(0, 100) + "..."
       : companyData.companyDetail?.about || "About";
@@ -14,7 +41,7 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
           const response = await axios.post('/api/tieup/request', {
             senderId: loggedInUserId,
             receiverId: companyData._id,
-            userType: 'college', // Adjust based on the user type
+            userType: 'college', 
           });
     
           if (response.data.success) {
@@ -34,15 +61,20 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
             <h6 className="card-subtitle mb-2 text-muted">{companyData.companyType}</h6>
             <p className="card-text">{aboutText}</p>
             <button onClick={handleTieUpRequest} style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-             backgroundColor: '#007bff',
-             color: '#fff',
-             border: 'none',
-             borderRadius: '4px',
-             cursor: 'pointer',
-            transition: 'background-color 0.2s',
-  }}>Connect</button>
+    padding: '10px 20px',
+    fontSize: '16px',
+    backgroundColor:
+    acceptedstatuscompany === "Request Sent..."
+        ? 'yellow' 
+        : acceptedstatuscompany === "Accepted"
+        ? 'green' 
+        : '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+  }}>{acceptedstatuscompany}</button>
           </div>
         </div>
       );

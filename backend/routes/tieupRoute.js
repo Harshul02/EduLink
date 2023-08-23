@@ -20,7 +20,7 @@ router.post('/request', async (req, res) => {
     });
 
     if (existingTieUp) {
-      return res.json({ success: false, message: 'Tie-up request already exists' });
+      return res.json({ success: false, message: 'They Already sent Request Check Inbox'});
     }
 
     
@@ -120,6 +120,25 @@ router.post('/request', async (req, res) => {
     }
   });
   
+  
+  router.get('/statuscheck/:userId/:rId', async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const rId = req.params.rId;
+  
+      // Fetch tie-up status from the database
+      const tieUp = await TieUp.findOne({ senderId: userId, receiverId: rId });
+      console.log(tieUp)
+      if (tieUp) {
+        res.json({ success: true, accepted: tieUp.accepted });
+      } else {
+        res.json({ success: false, message: 'Tie-up not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+  });
   
   
   async function getEntityName(entityId) {
