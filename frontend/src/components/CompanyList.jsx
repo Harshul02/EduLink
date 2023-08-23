@@ -63,7 +63,9 @@ const CompanyList = () => {
             </div>
           )}
         </div>
+
       </div>
+      
     </div>
   );
 };

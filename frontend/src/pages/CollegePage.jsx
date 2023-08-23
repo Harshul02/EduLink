@@ -83,8 +83,8 @@ const CompanyPage = () => {
             {/* Fixed profile box */}
             <div className="profile-box" style={{ position: "absolute", transform: "translate(250%, -33%)",zIndex:'999' }}>
         <img src="./assets/images/bg1.png" alt="Profile Picture" className="img-fluid" style={{ width: "130px", height: "130px" }} />
-        <h2>Amazon</h2>
-        <p>MNC</p>
+        <h2>{college.collegeName}</h2>
+        <p>{college.collegeType}</p>
       </div>
 
       {/* horizontal navigation bar */}

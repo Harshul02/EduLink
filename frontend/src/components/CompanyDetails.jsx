@@ -127,6 +127,8 @@ const CompanyDetails = (props) => {
           Submit
         </button>
       </form>
+
+      
     </div>
   );
 };

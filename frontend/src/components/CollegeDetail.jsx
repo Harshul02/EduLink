@@ -96,7 +96,7 @@ const CollegeDetail = (props) => {
           />
         </div>
         <div className="form-group my-3">
-          <label htmlFor="domains">Companies Visited:</label>
+          <label htmlFor="domains">Courses Offered:</label>
           <textarea
             className="form-control"
             name="domains"
