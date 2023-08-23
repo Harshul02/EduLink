@@ -24,12 +24,16 @@ function About() {
   }, []);
 
   return (
-    <div className="my-4 container">
-      <h2>About</h2>
+    // <div className="my-4 container">
+    <div
+      className="my-5 container-md text-center"
+      style={{ width: "70%", marginTop: "30px" }}
+    >
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div style={{ textAlign: "left" }}>
+        /*
+          div style={{ textAlign: "left" }}>
           {data.about && (
             <div className="my-3">
               <h4>About Company</h4>
@@ -69,6 +73,76 @@ function About() {
             </div>
           )}
         </div>
+        */
+        <div class="row">
+        <div class="col-3 ">
+          <div class="row justify-content-end">
+            <div class="col-xl-9 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <div class="media d-flex">
+                      <div class="align-self-center">
+                        <i class="icon-user warning font-large-2 float-left"></i>
+                      </div>
+                      <div class="media-body text-right float-end">
+                        <h3>{data.employees}</h3>
+                        <span>Total Employees</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row justify-content-end ">
+            <div class="col-xl-9 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <div class="media d-flex">
+                      <div class="align-self-center">
+                        <i class="icon-pointer danger font-large-2 float-left"></i>
+                      </div>
+                      <div class="media-body text-right">
+                        <h6>{data.location}</h6>
+                        <span>Location</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row justify-content-end">
+            <div className="col-xl-9 col-sm-12 col-12">
+              <button
+                class="btn btn-success"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
+                Tech Domains
+              </button>
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">{data.domains}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class=" col-9">
+          <div
+            className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-5 py-4 px-5 text-primary-emphasis"
+            style={{ fontFamily: "'Roboto', sans-serif" }}
+          >
+            {data.about}
+          </div>
+        </div>
+      </div>
       )}
     </div>
   );
