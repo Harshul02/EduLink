@@ -19,15 +19,12 @@ const CompanyPage = () => {
   const findUser = async() =>{
     try{
       const token = localStorage.getItem("companytoken");
-      // console.log(token);
       const data = await axios.post("/api/company/findcompany", {token});
       const companyData = data.data.data;
       setCompany(companyData);
-      // console.log(companyData);
       if (companyData.firstLogin) {
         setShowModal(true); 
       }
-      // console.log(showModal);
     }catch(error)
     {
       console.error(error);
@@ -123,7 +120,7 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <About />}
-        {selectedItem === 'tieups' && <Tieups />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('companytoken')} />}
         {selectedItem === 'history' && <History />}
         {selectedItem === 'college' && <CollegeList />}
       </div>
@@ -131,7 +128,7 @@ const CompanyPage = () => {
       )}
 
     </div>
-    {/* // </div> */}
+    
     </>
   );
 };
