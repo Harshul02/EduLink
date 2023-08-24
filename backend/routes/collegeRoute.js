@@ -37,7 +37,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    console.log(req.body);
     const college = await College.findOne({
       email: req.body.email,
     });
@@ -72,7 +71,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/findcollege", async(req,res)=>{
   try{
-    console.log(req.body);
+   
     const college = await College.findOne({ _id: req.body.token }).select(
       "-password -_id"
     );
@@ -87,9 +86,9 @@ router.post("/findcollege", async(req,res)=>{
 router.post("/savedetails", async(req,res)=>{
   try{
     const collegeId = req.body.token;
-    console.log(collegeId);
     
-    console.log(req.body);
+    
+    
     const collegeDetails = new CollegeDetails({
       id: req.body.token,
       about: req.body.about,
@@ -99,7 +98,7 @@ router.post("/savedetails", async(req,res)=>{
       domains: req.body.domains,
       location: req.body.location,
     });
-    console.log(collegeDetails);
+    
     await collegeDetails.save();
 
     await College.findByIdAndUpdate(
@@ -123,7 +122,7 @@ router.post("/savedetails", async(req,res)=>{
 
 router.post("/getcollegedetail", async(req,res)=>{
   try{
-    console.log(req.body);
+    
     const collegeDetail = await CollegeDetails.findOne({ id: req.body.token });
     res.status(200).send({data: collegeDetail});
 }catch(error)
@@ -152,8 +151,6 @@ router.post("/getcompanydata", async(req,res)=>{
         companyDetail: companyDetail
       };
     });
-    console.log(allCompanyData);
-    // res.json(allCompanyData);
     res.status(200).send({data: allCompanyData});
   } catch (error) {
     console.error(error);

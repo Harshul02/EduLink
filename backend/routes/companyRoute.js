@@ -71,7 +71,6 @@ router.post("/register", async (req, res) => {
 
   router.post("/findcompany", async(req,res)=>{
     try{
-      console.log(req.body);
       const company = await Company.findOne({ _id: req.body.token }).select(
         "-password -_id"
       );
@@ -85,7 +84,7 @@ router.post("/register", async (req, res) => {
   router.post("/savedetails", async(req,res)=>{
     try{
       const companyId = req.body.token;
-      console.log(companyId);
+      
       
       console.log(req.body);
       const companyDetails = new CompanyDetails({
@@ -121,7 +120,7 @@ router.post("/register", async (req, res) => {
 
   router.post("/getcompanydetail", async(req,res)=>{
     try{
-      console.log(req.body);
+      
       const companyDetail = await CompanyDetails.findOne({ id: req.body.token });
       res.status(200).send({data: companyDetail});
   }catch(error)
@@ -150,7 +149,7 @@ router.post("/register", async (req, res) => {
           collegeDetail: collegeDetail
         };
       });
-      console.log(allCollegeData);
+      
       // res.json(allCompanyData);
       res.status(200).send({data: allCollegeData});
     } catch (error) {
