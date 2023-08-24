@@ -21,7 +21,6 @@ const CollegeDetail = (props) => {
       console.log(values);
       props.setModal(false);
       const response = await axios.post("/api/college/savedetails", values);
-        // console.log(response.data.message);
       if(response.data.success)
       {
           toast.success(response.data.message);
@@ -110,16 +109,6 @@ const CollegeDetail = (props) => {
         </div>
         <div className="form-group my-3">
           <label htmlFor="location">College Location:</label>
-          {/* <textarea
-            className="form-control"
-            name="domains"
-            id="domains"
-            cols="30"
-            rows="1"
-            value={formData.domains}
-            onChange={handleInputChange}
-            required
-          /> */}
           <input className="form-control" type="text" name="location" id="location" value={formData.location} onChange={handleInputChange}/>
         </div>
         <button type="submit" className="btn btn-primary">

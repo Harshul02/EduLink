@@ -60,16 +60,6 @@ const CompanyPage = () => {
 
                 <CollegeDetail setModal={setShowModal}/>
               </div>
-              {/* <div className="modal-footer"> */}
-                {/* <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button> */}
-                {/* You can add more buttons or actions here if needed */}
-              {/* </div> */}
             </div>
           </div>
         </div>
@@ -109,7 +99,7 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <CollegeAbout />}
-        {selectedItem === 'tieups' && <Tieups />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'history' && <History />}
         {selectedItem === 'company' && <CompanyList />}
       </div>

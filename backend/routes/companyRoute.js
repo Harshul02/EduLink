@@ -37,42 +37,7 @@ router.post("/register", async (req, res) => {
 
 
   router.post("/login", async (req, res) => {
-    // try {
-    //   const { email, password } = req.body;
-    //   const company = await Company.findOne({ email});
-    //   if (!company) {
-    //     return res.status(400).json({
-    //       message: "Company not found",
-    //       success: false,
-    //     });
-    //   }
-    //   const isMatch = await bcrypt.compare(password, company.password);
-    //   if (!isMatch) {
-    //     return res.status(400).json({
-    //       message: "Invalid password",
-    //       success: false,
-    //     });
-    //   }
-  
-    //   // const token = jwt.sign(
-    //   //   { companyId: company._id },
-    //   //   process.env.jwt_secret,
-    //   //   { expiresIn: "24h" }
-    //   // );
-    //   res.status(200).json({
-    //     message: "Login successful",
-    //     success: true,
-    //     token,
-    //     company,
-    //   });
-    // } catch (error) {
-    //   res.status(500).json({
-    //     message: error.message,
-    //     success: false,
-    //   });
-    // }
-
-    try {
+     try {
       const company = await Company.findOne({
         email: req.body.email,
       });
