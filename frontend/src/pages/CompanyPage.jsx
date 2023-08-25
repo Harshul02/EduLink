@@ -102,7 +102,7 @@ const CompanyPage = () => {
       <nav className="navbar navbar-expand-md navbar-light bg-light">
         <ul className="navbar-nav mx-auto">
           <li className="nav-item">
-            <Link className="nav-link"  onClick={() => handleNavItemClick('about')}>About</Link>
+            <Link className="nav-link"  onClick={() => handleNavItemClick('about')}>About</Link>  
           </li>
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('college')}>Browse Colleges</Link>

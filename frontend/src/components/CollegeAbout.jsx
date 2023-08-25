@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom"; // Import useParams
+
 
 const CollegeAbout = () => {
   const [data, setData] = useState({});
+  const { collegeId } = useParams(); 
   const [isLoading, setIsLoading] = useState(true);
+  const [college, setCollege] = useState({});
+  console.log(college);
 
   const findDetail = async () => {
     try {
-      const token = localStorage.getItem("collegetoken");
-      console.log(token);
+      // const token = localStorage.getItem("collegetoken");
+      // console.log(token);
+      const token = collegeId || localStorage.getItem("collegetoken");  
       const response = await axios.post("/api/college/getcollegedetail", {
-        token,
+        token:token,
       });
-      console.log(response.data);
       const collegeData = response.data.data;
       setData(collegeData);
+
+      const data = await axios.post("/api/college/findcollege", {token});
+      const collegeNam = data.data.data;
+      setCollege(collegeNam);
+      console.log(collegeNam);
+
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -23,7 +34,7 @@ const CollegeAbout = () => {
 
   useEffect(() => {
     findDetail();
-  }, []);
+  }, [collegeId]);
 
   return (
     <div
@@ -78,6 +89,10 @@ const CollegeAbout = () => {
         // <div class="row">
 
         <div class="row">
+                    {collegeId && <p className=" display-1 font-weight-bold">{college.collegeName}</p>}
+                    {collegeId && <p className=" display-5 mb-5" style={{marginTop:"-23px"}}>{college.collegeType}</p>}
+
+
           <div class="col-3 ">
             <div class="row justify-content-end">
               <div class="col-xl-9 col-sm-12 col-12">
@@ -101,6 +116,7 @@ const CollegeAbout = () => {
 
             <div className="row justify-content-end ">
               <div class="col-xl-9 col-sm-12 col-12">
+
                 <div class="card">
                   <div class="card-content">
                     <div class="card-body">
@@ -138,6 +154,7 @@ const CollegeAbout = () => {
             </div>
           </div>
           <div class=" col-9">
+
             <div
               className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-5 py-4 px-5 text-primary-emphasis"
               style={{ fontFamily: "'Roboto', sans-serif" }}

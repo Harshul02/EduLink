@@ -33,7 +33,7 @@ const CompanyPage = () => {
     findUser();
   }, []);
 
-  const [selectedItem, setSelectedItem] = useState('about');
+  const [selectedItem, setSelectedItem] = useState('company');
 
   const handleNavItemClick = (item) => {
     setSelectedItem(item);
@@ -49,8 +49,8 @@ const CompanyPage = () => {
         <div className="modal fade show" style={{ display: 'block' }}>
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">
+              <div className="modal-header" style={{margin:"0 auto"}}>
+                <h5 className="modal-title" id="exampleModalLongTitle" style={{margin:"0 auto"}}>
                   Welcome to the EduLink
                 </h5>
                 
@@ -81,7 +81,7 @@ const CompanyPage = () => {
       <nav className="navbar navbar-expand-md navbar-light bg-light">
         <ul className="navbar-nav mx-auto">
           <li className="nav-item">
-            <Link className="nav-link"  onClick={() => handleNavItemClick('about')}>About</Link>
+            <Link className="nav-link"  onClick={() => handleNavItemClick('about')} >About</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('company')}>Browse Companies</Link>
@@ -98,7 +98,7 @@ const CompanyPage = () => {
 
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
-        {selectedItem === 'about' && <CollegeAbout />}
+        {selectedItem === 'about' && <CollegeAbout college={college}/>}
         {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'history' && <History />}
         {selectedItem === 'company' && <CompanyList />}

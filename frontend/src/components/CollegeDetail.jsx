@@ -42,7 +42,7 @@ const CollegeDetail = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} >
         <div className="form-group">
           <label htmlFor="inputField">About College:</label>
           <textarea

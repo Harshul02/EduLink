@@ -23,6 +23,7 @@ const Tieups = ({ loggedInUserId }) => {
     const fetchPendingRequests = async () => {
       try {
         const response = await axios.get(`/api/tieup/pending/${loggedInUserId}`);
+        console.log(response);
         if (response.data.success) {
           setPendingRequests(response.data.pendingRequests);
         } else {
@@ -45,6 +46,7 @@ const Tieups = ({ loggedInUserId }) => {
         requestId,
         accepted: true,
       });
+      console.log(requestId);
 
       if (response.data.success) {
         console.log('Tie-up request accepted');
@@ -69,6 +71,7 @@ const Tieups = ({ loggedInUserId }) => {
       if (response.data.success) {
         console.log('Tie-up request rejected');
         const updatedRequests = pendingRequests.filter(request => request._id !== requestId);
+        console.log(updatedRequests);
         setPendingRequests(updatedRequests);
       } else {
         console.error('Failed to reject tie-up request');
@@ -82,22 +85,29 @@ const Tieups = ({ loggedInUserId }) => {
     <div style={{ fontFamily: 'Arial, sans-serif', margin: '20px auto', padding: '20px', backgroundColor: '#f7f7f7', maxWidth: '800px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
       <h2 style={{ fontSize: '32px', textAlign: 'center', marginBottom: '20px', color: '#333' }}>Tie-Ups</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ flex: '1', marginRight: '20px' }}>
+        <div className='bg-primary bg-opacity-10 bg-gradient rounded-4 py-4' style={{ flex: '1', marginRight: '20px', backgroundColor: '#f7f7f7' }}>
           <h3 style={{ fontSize: '24px', marginBottom: '10px', color: '#555' }}>Accepted Tie-Ups:</h3>
           
             <ul style={{ listStyleType: 'none', padding: 0 }}>
               {acceptedTieUps.map((tieUp) => (
-                <li key={tieUp._id} style={{ fontSize: '18px', marginBottom: '10px', color: '#444' }}>
-                  {loggedInUserId === tieUp.senderId
-                    ? `Tied up with ${tieUp.receiverName}`
-                    : `Tied up with ${tieUp.senderName}`}
-                </li>
+           <li key={tieUp._id} style={{ fontSize: '18px', marginBottom: '10px', color: '#444' }}>
+           {loggedInUserId === tieUp.senderId ? (
+             <span>
+               Tied up with <span className="text-capitalize">{tieUp.receiverName}</span>
+             </span>
+           ) : (
+             <span>
+               Tied up with <span className="text-capitalize">{tieUp.senderName}</span>
+             </span>
+           )}
+         </li>
+         
               ))}
             </ul>
          
           
         </div>
-        <div style={{ flex: '1', marginLeft: '20px' }}>
+        <div className='bg-primary bg-opacity-10 bg-gradient rounded-4 py-4' style={{ flex: '1', marginLeft: '20px', backgroundColor: '#f7f7f7' }}>
           <h3 style={{ fontSize: '24px', marginBottom: '10px', color: '#555' }}>Pending Requests:</h3>
           {pendingRequests.map((request) => (
             <Request
