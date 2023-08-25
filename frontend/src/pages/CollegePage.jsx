@@ -92,13 +92,12 @@ const CompanyPage = () => {
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('history')}>History</Link>
           </li>
-          {/* Add more navigation items as needed */}
         </ul>
       </nav>
 
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
-        {selectedItem === 'about' && <CollegeAbout college={college}/>}
+        {selectedItem === 'about' && <CollegeAbout/>}
         {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'history' && <History />}
         {selectedItem === 'company' && <CompanyList />}

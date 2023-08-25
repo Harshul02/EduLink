@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const Request = ({request, onAccept, onReject}) => {
+const Request = ({request, onAccept, onReject,token,userType}) => {
+  const linkTo = userType === "college" ?
+    `/companypage/${request.senderId}/companyabout` :
+    `/collegepage/${request.senderId}/collegeabout`;
   return (
 
     <div
@@ -32,9 +34,9 @@ const Request = ({request, onAccept, onReject}) => {
       <div style={{ display: "flex", alignItems: "center" }}>
 
       <Link
-          to={`/collegepage/${request.senderId}/collegeabout`} // Replace with appropriate URL format
+          to={linkTo}
           style={{
-            padding: "8px 16px",
+            padding: "6px 12px",
             fontSize: "14px",
             backgroundColor: "#007bff",
             color: "#fff",
@@ -43,16 +45,17 @@ const Request = ({request, onAccept, onReject}) => {
             cursor: "pointer",
             transition: "background-color 0.2s",
             marginRight: "10px",
-            textDecoration: "none", // Remove underline from link
+            textDecoration: "none",
           }}
+          title="View Details"
         >
-          Open College About
+          <i class="bi bi-box-arrow-up-right"></i>
         </Link>
 
         <button
           onClick={() => onAccept(request._id)}
           style={{
-            padding: "8px 16px",
+            padding: "6px 12px",
             fontSize: "14px",
             backgroundColor: "#28a745",
             color: "#fff",
@@ -62,13 +65,14 @@ const Request = ({request, onAccept, onReject}) => {
             transition: "background-color 0.2s",
             marginRight: "10px",
           }}
+          title="Accept Request"
         >
           <i class="bi bi-check-lg"></i>{" "}
         </button>
         <button
           onClick={() => onReject(request._id)}
           style={{
-            padding: "8px 16px",
+            padding: "6px 12px",
             fontSize: "14px",
             backgroundColor: "#dc3545",
             color: "#fff",
@@ -77,9 +81,12 @@ const Request = ({request, onAccept, onReject}) => {
             cursor: "pointer",
             transition: "background-color 0.2s",
           }}
+          title = "Reject Request"
         >
           <i class="bi bi-x-lg"></i>{" "}
         </button>
+
+        
       </div>
     </div>
   );

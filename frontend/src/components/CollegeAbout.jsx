@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useParams,useNavigate } from "react-router-dom"; 
 
 
 const CollegeAbout = () => {
@@ -8,6 +8,7 @@ const CollegeAbout = () => {
   const { collegeId } = useParams(); 
   const [isLoading, setIsLoading] = useState(true);
   const [college, setCollege] = useState({});
+  const navigate = useNavigate(); 
   console.log(college);
 
   const findDetail = async () => {
@@ -89,13 +90,25 @@ const CollegeAbout = () => {
         // <div class="row">
 
         <div class="row">
+               
                     {collegeId && <p className=" display-1 font-weight-bold">{college.collegeName}</p>}
-                    {collegeId && <p className=" display-5 mb-5" style={{marginTop:"-23px"}}>{college.collegeType}</p>}
+                    {collegeId && <p className=" display-6 mb-5" style={{marginTop:"-23px"}}>{college.collegeType}</p>}
 
 
           <div class="col-3 ">
+            
             <div class="row justify-content-end">
+            
               <div class="col-xl-9 col-sm-12 col-12">
+              {collegeId && (
+            <button
+            onClick={() => navigate(-1)} 
+            className="btn btn-primary mb-3"
+            style={{ position: "absolute", top: 10, left: 10 }}
+          >
+            Back
+          </button>)}
+              
                 <div class="card">
                   <div class="card-content">
                     <div class="card-body">

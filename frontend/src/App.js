@@ -8,7 +8,8 @@ import CollegeLogin from "./pages/CollegeLogin";
 import CollegeRegister from "./pages/CollegeRegister";
 import CollegePage from "./pages/CollegePage";
 import { CollegeAbout } from "./components";
-import { useState } from "react";
+import { About } from "./components";
+
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Route exact path="/collegeregister" element={<CollegeRegister />} />
           <Route exact path="/collegepage" element={<CollegePage />} />
           <Route exact path="/collegepage/:collegeId/collegeabout" element={<CollegeAbout />} />
+          <Route exact path="/companypage/:companyId/companyabout" element={<About />} />
+
 
         </Routes>
       </BrowserRouter>
