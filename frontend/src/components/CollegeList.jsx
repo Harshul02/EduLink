@@ -155,7 +155,7 @@ const CollegeList = () => {
                           <h5 className="card-title text-uppercase fw-bolder">
                             {selectedCollege.collegeName}
                           </h5>
-                          <h6 className="card-subtitle text-uppercase fw-semibold">
+                          <h6 className="card-subtitle text-capitalize fw-semibold text-muted">
                             {selectedCollege.collegeType}
                           </h6>
                         </div>

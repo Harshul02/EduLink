@@ -154,7 +154,7 @@ const CompanyList = () => {
                           <h5 className="card-title text-uppercase fw-bolder">
                             {selectedCompany.companyName}
                           </h5>
-                          <h6 className="card-subtitle text-uppercase fw-semibold text-muted">
+                          <h6 className="card-subtitle text-capitalize fw-semibold text-muted">
                             {selectedCompany.companyType}
                           </h6>
                         </div>
