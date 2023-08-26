@@ -40,8 +40,9 @@ function About() {
       style={{ width: "70%", marginTop: "30px" }}
     >
       {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+        <div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>      ) : (
         /*
           div style={{ textAlign: "left" }}>
           {data.about && (
