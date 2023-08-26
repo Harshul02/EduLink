@@ -4,9 +4,10 @@ import CompanyCard from "./CompanyCard";
 import { io } from "socket.io-client";
 import Chat from "./Chat";
 
-const CompanyList = () => {
+const CompanyHistory = ({loggedInUserId}) => {
   const [companyDataList, setCompanyDataList] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [chatHistory, setChatHistory] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [expanded, setExpanded] = useState(false);
 
@@ -27,11 +28,27 @@ const CompanyList = () => {
     getCompanyData();
     const newSocket = io();
     setSocket(newSocket);
+    newSocket.emit("setUser", loggedInUserId); 
+
+    newSocket.on("initialChatHistory", (initialHistory) => {
+      setChatHistory(initialHistory);
+    });
 
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [loggedInUserId]);
+
+  const filteredCompanydata = companyDataList.filter((companyData) => {
+    return chatHistory.some(
+      (chat) =>
+        (chat.loggedInUserId === loggedInUserId &&
+          chat.userId === companyData._id) ||
+        (chat.loggedInUserId === companyData._id &&
+          chat.userId === loggedInUserId)
+    );
+  });
+    
 
   const handleCardClick = (companyData) => {
     setSelectedCompany((prevSelected) =>
@@ -41,12 +58,25 @@ const CompanyList = () => {
 
   return (
     <div className="container" style={{ width: "80%" }}>
+      {filteredCompanydata.length === 0 ? (
+      <div className="default-details card mb-3 border-0 shadow rounded" style={{ background: "#f0f0f0" }}>
+      <div className="card-body text-center py-5">
+        <p className="card-text fs-5 fw-bold mb-0">
+          No Chat History Found.
+        </p>
+      </div>
+    </div>
+     
+
+
+
+     ):(
       <div className="row">
         <div
           className="col-md-6"
           style={{ overflowY: "auto", maxHeight: "70vh" }}
         >
-          {companyDataList.map((companyData) => (
+          {filteredCompanydata.map((companyData) => (
             <CompanyCard
               key={companyData._id}
               companyData={companyData}
@@ -63,14 +93,6 @@ const CompanyList = () => {
                 background: "linear-gradient(to right, #b7d8e8, #c7e9f4)",
               }}
             >
-              {/* <div className="card-body">
-      <h3 className="card-title fs-4 mb-3 text-primary">{selectedCompany.companyName}</h3>
-      <p className="card-text fs-6 mb-0 text-muted">
-        {selectedCompany.companyDetail?.about && selectedCompany.companyDetail.about.length > 100
-          ? selectedCompany.companyDetail.about.slice(0, 100) + "..."
-          : selectedCompany.companyDetail?.about || "About"}
-      </p>
-    </div> */}
               <div class="row">
                 <div class="col-3 ">
                   <div class="row justify-content-end">
@@ -200,8 +222,9 @@ const CompanyList = () => {
           )} */}
         </div>
       </div>
+     )}
     </div>
   );
 };
 
-export default CompanyList;
+export default CompanyHistory;

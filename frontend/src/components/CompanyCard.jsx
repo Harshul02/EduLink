@@ -59,7 +59,6 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
           <div className="card-body">
             <h5 className="card-title">{companyData.companyName}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{companyData.companyType}</h6>
-            <p className="card-text fst-italic">"{companyData.companyDetail.moto}"</p>
             <p className="card-text">{aboutText}</p>
             <button onClick={handleTieUpRequest} style={{
     padding: '10px 20px',

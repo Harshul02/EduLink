@@ -149,8 +149,6 @@ router.post("/register", async (req, res) => {
           collegeDetail: collegeDetail
         };
       });
-      
-      // res.json(allCompanyData);
       res.status(200).send({data: allCollegeData});
     } catch (error) {
       console.error(error);
