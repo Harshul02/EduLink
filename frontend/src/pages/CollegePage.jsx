@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion as m } from 'framer-motion';
-import { CollegeAbout, Tieups,History, CollegeList,Navbar, CompanyList } from '../components/index';
+import { CollegeAbout, Tieups,CompanyHistory, CollegeList,Navbar, CompanyList } from '../components/index';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -99,7 +99,7 @@ const CompanyPage = () => {
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <CollegeAbout/>}
         {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
-        {selectedItem === 'history' && <History />}
+        {selectedItem === 'history' && <CompanyHistory loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'company' && <CompanyList />}
       </div>
 </>

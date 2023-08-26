@@ -64,14 +64,6 @@ const CollegeList = () => {
                 background: "linear-gradient(to right, #b7d8e8, #c7e9f4)",
               }}
             >
-              {/* //   <div className="card-body">
-            //     <h3 className="card-title fs-4 mb-3 text-primary">{selectedCollege.collegeName}</h3>
-            //     <p className="card-text fs-6 mb-0 text-primary">
-            //       {selectedCollege.collegeDetail?.about && selectedCollege.collegeDetail.about.length > 100
-            //         ? selectedCollege.collegeDetail.about.slice(0, 100) + "..."
-            //         : selectedCollege.collegeDetail?.about || "About"}
-            //     </p>
-            //   </div> */}
 
 <div class="row">
                 <div class="col-3 ">
@@ -144,8 +136,7 @@ const CollegeList = () => {
                     className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-7 py-4 px-3 text-primary-emphasis "
                     style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
-                    {/* <div class="card card-body"  style={{ background: "#198754" }}>{selectedCollege.companyName}</div> */}
-
+                 
                     <div
                       className="card mb-4  rounded-5"
                       style={{ width: "50%", margin: "0 auto" }}
@@ -196,14 +187,7 @@ const CollegeList = () => {
               </div>
             </div>
           )}
-          {/* {selectedCollege && (
-            <Chat
-              userType="company"
-              loggedInUserId={localStorage.getItem("companytoken")}
-              userId={selectedCollege._id}
-              socket={socket}
-            />
-          )} */}
+          
         </div>
       </div>
     </div>
