@@ -63,14 +63,6 @@ const CompanyList = () => {
                 background: "linear-gradient(to right, #b7d8e8, #c7e9f4)",
               }}
             >
-              {/* <div className="card-body">
-      <h3 className="card-title fs-4 mb-3 text-primary">{selectedCompany.companyName}</h3>
-      <p className="card-text fs-6 mb-0 text-muted">
-        {selectedCompany.companyDetail?.about && selectedCompany.companyDetail.about.length > 100
-          ? selectedCompany.companyDetail.about.slice(0, 100) + "..."
-          : selectedCompany.companyDetail?.about || "About"}
-      </p>
-    </div> */}
               <div class="row">
                 <div class="col-3 ">
                   <div class="row justify-content-end">
@@ -142,7 +134,7 @@ const CompanyList = () => {
                     className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-7 py-4 px-3 text-primary-emphasis "
                     style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
-                    {/* <div class="card card-body"  style={{ background: "#198754" }}>{selectedCompany.companyName}</div> */}
+                  
 
                     <div
                       className="card mb-4  rounded-5"
@@ -194,10 +186,6 @@ const CompanyList = () => {
               </div>
             </div>
           )}
-
-          {/* {selectedCompany && (
-            <Chat userType="college" loggedInUserId={localStorage.getItem('collegetoken')}  userId={selectedCompany._id} socket={socket} />
-          )} */}
         </div>
       </div>
     </div>

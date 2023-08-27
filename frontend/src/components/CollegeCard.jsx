@@ -12,7 +12,7 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
         if (response.data.success===true) {
           const tieUpStatus = response.data.accepted;
           if (tieUpStatus === true) {
-            setAcceptedStatus("Accepted");
+            setAcceptedStatus("Connected");
           } else if (tieUpStatus === false) {
             setAcceptedStatus("Request Sent...");
         } 
@@ -67,7 +67,7 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
     backgroundColor:
       acceptedstatus === "Request Sent..."
         ? 'yellow' 
-        : acceptedstatus === "Accepted"
+        : acceptedstatus === "Connected"
         ? 'green' 
         : '#007bff',
     color: '#fff',
