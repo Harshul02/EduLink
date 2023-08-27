@@ -7,24 +7,22 @@
     const [pendingRequests, setPendingRequests] = useState([]);
     const token = localStorage.getItem("companytoken") || localStorage.getItem("collegetoken");
     const userType = token === localStorage.getItem("companytoken") ? "company" : "college";
+    const fetchAcceptedTieUps = async () => {
+      try {
+        const response = await axios.get(`/api/tieup/accepted/${loggedInUserId}`);
+        if (response.data.success) {
+          setAcceptedTieUps(response.data.acceptedTieUps);
+        } else {
+          console.error('Failed to fetch accepted tie-ups');
+        }
+      } catch (error) {
+        console.error('Error fetching accepted tie-ups:', error);
+      }
+    };
+
 
     useEffect(() => {
-      const fetchAcceptedTieUps = async () => {
-        try {
-          const response = await axios.get(`/api/tieup/accepted/${loggedInUserId}`);
-
-          
-          console.log(token);
-          if (response.data.success) {
-            setAcceptedTieUps(response.data.acceptedTieUps);
-          } else {
-            console.error('Failed to fetch accepted tie-ups');
-          }
-        } catch (error) {
-          console.error('Error fetching accepted tie-ups:', error);
-        }
-      };
-
+      
       const fetchPendingRequests = async () => {
         try {
           const response = await axios.get(`/api/tieup/pending/${loggedInUserId}`);
@@ -54,9 +52,9 @@
         console.log(requestId);
 
         if (response.data.success) {
-          console.log('Tie-up request accepted');
-          const updatedTieUps = pendingRequests.filter(request => request._id !== requestId);
+          fetchAcceptedTieUps()
           setAcceptedTieUps(prevTieUps => [...prevTieUps, response.data.tieUp]);
+          const updatedTieUps = pendingRequests.filter(request => request._id !== requestId);
           setPendingRequests(updatedTieUps);
         } else {
           console.error('Failed to accept tie-up request');

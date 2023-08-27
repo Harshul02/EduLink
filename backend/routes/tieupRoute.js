@@ -100,7 +100,7 @@ router.post('/request', async (req, res) => {
           { senderId: userId, accepted: true },
           { receiverId: userId, accepted: true },
         ],
-      }).exec();
+      });
   
       
       const populatedTieUps = [];
