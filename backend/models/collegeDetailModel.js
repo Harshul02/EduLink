@@ -60,7 +60,11 @@ const collegeDetailSchema = new mongoose.Schema({
   internshipoffered: {
     type: String,
     default: "Details will be available soon",
-  }
+  },
+  companiesvisited: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("collegeDetail", collegeDetailSchema);
