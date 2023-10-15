@@ -18,11 +18,10 @@ function About() {
       });
       const companyData = response.data.data;
       setData(companyData);
-
+      console.log(companyData);
       const data = await axios.post("/api/company/findcompany", { token });
       const companyNam = data.data.data;
       setCompany(companyNam);
-
       setIsLoading(false);
     } catch (error) {
       console.error(error);

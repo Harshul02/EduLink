@@ -29,6 +29,26 @@ const companyDetailSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  studentdomain: {
+    type: String,
+    default: "Details will Be available soon",
+  },
+  hiringperiod: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  successstories: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  industrypartnership: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  workculture: {
+    type: String,
+    default: "Details will be available soon",
+  },
 });
 
 module.exports = mongoose.model("companyDetail", companyDetailSchema);

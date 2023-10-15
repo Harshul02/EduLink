@@ -29,6 +29,38 @@ const collegeDetailSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  studentsplaced: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  naacranking: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  maxpackage: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  averagepackage: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  alumninetwork: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  foreigntieups: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  researchpapers: {
+    type: String,
+    default: "Details will be available soon",
+  },
+  internshipoffered: {
+    type: String,
+    default: "Details will be available soon",
+  }
 });
 
 module.exports = mongoose.model("collegeDetail", collegeDetailSchema);

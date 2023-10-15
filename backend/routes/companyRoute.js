@@ -96,7 +96,7 @@ router.post("/register", async (req, res) => {
         domains: req.body.domains,
         location: req.body.location,
       });
-      console.log(companyDetails);
+      // console.log(companyDetails);
       await companyDetails.save();
 
       await Company.findByIdAndUpdate(
@@ -122,6 +122,7 @@ router.post("/register", async (req, res) => {
     try{
       
       const companyDetail = await CompanyDetails.findOne({ id: req.body.token });
+      console.log(companyDetail);
       res.status(200).send({data: companyDetail});
   }catch(error)
   {
