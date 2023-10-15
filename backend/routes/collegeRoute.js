@@ -159,4 +159,53 @@ router.post("/getcompanydata", async(req,res)=>{
 })
 
 
+router.post('/updatedetails', async (req, res) => {
+  try {
+    const collegeId = req.body.token;
+    const updatedData = {
+      about: req.body.about,
+      moto: req.body.moto,
+      employees: req.body.employees,
+      ethics: req.body.ethics,
+      domains: req.body.domains,
+      location: req.body.location,
+      studentsplaced: req.body.studentsplaced,
+      naacranking: req.body.naacranking,
+      maxpackage: req.body.maxpackage,
+      averagepackage: req.body.averagepackage,
+      alumninetwork: req.body.alumninetwork,
+      foreigntieups: req.body.foreigntieups,
+      researchpapers: req.body.researchpapers,
+      internshipoffered: req.body.internshipoffered,
+      companiesvisited: req.body.companiesvisited,
+    };
+
+    
+    const result = await CollegeDetails.findOneAndUpdate(
+      { id: collegeId }, 
+      updatedData,
+      { new: true } 
+    );
+
+    if (result) {
+      res.status(200).json({
+        data: result,
+        message: 'College details updated successfully',
+        success: true,
+      });
+    } else {
+      res.status(404).json({
+        message: 'College not found or details not updated',
+        success: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+});
+
+
   module.exports = router;
