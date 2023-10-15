@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
   const [acceptedstatus, setAcceptedStatus] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchTieUpStatus() {
@@ -79,6 +81,17 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
 >
   {acceptedstatus}
 </button>
+
+<button style={{
+    padding: '10px 20px',
+    fontSize: '16px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+  }} onClick={()=>navigate(`${collegeData._id}/view/collegeabout`)}>About</button>
 
       </div>
     </div>
