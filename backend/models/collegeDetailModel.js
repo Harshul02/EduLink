@@ -13,6 +13,10 @@ const collegeDetailSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  website: {
+    type: String,
+    required: true,
+  },
   employees: {
     type: Number,
     required: true,

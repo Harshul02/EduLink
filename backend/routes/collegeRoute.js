@@ -93,6 +93,7 @@ router.post("/savedetails", async(req,res)=>{
       id: req.body.token,
       about: req.body.about,
       moto: req.body.moto,
+      website: req.body.website,
       employees: req.body.employees,
       ethics: req.body.ethics,
       domains: req.body.domains,

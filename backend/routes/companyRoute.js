@@ -90,6 +90,7 @@ router.post("/register", async (req, res) => {
       const companyDetails = new CompanyDetails({
         id: req.body.token,
         about: req.body.about,
+        website: req.body.website,
         moto: req.body.moto,
         employees: req.body.employees,
         ethics: req.body.ethics,

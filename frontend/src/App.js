@@ -9,6 +9,8 @@ import CollegeRegister from "./pages/CollegeRegister";
 import CollegePage from "./pages/CollegePage";
 import { CollegeAbout } from "./components";
 import { About } from "./components";
+import CheckAboutCompany from "./pages/CheckAboutCompany";
+import CheckAboutCollege from "./pages/CheckAboutCollege";
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route exact path="/collegepage" element={<CollegePage />} />
           <Route exact path="/collegepage/:collegeId/collegeabout" element={<CollegeAbout />} />
           <Route exact path="/companypage/:companyId/companyabout" element={<About />} />
+          <Route exact path="/collegepage/:companyId/view/companyabout" element={<CheckAboutCompany />} />
+          <Route exact path="/companypage/:collegeId/view/collegeabout" element={<CheckAboutCollege />} />
 
 
         </Routes>

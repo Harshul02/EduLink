@@ -10,6 +10,7 @@ const CompanyDetails = (props) => {
   const [formData, setFormData] = useState({
     about: "",
     moto: "",
+    website: "",
     employees: "",
     ethics: "",
     domains: [],
@@ -77,6 +78,10 @@ const CompanyDetails = (props) => {
             onChange={handleInputChange}
             required
           />
+        </div>
+        <div className="form-group my-3">
+          <label htmlFor="website">Company's Website:</label>
+          <input className="form-control" type="url" name="website" id="website" value={formData.website} onChange={handleInputChange} required/>
         </div>
         <div className="form-group my-3">
           <label htmlFor="employees">Number of Employes:</label>
