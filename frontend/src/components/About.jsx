@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams,Link } from "react-router-dom";
+import EditCompanyDetails from "./EditCompanyDetails";
 
 function About() {
   const [data, setData] = useState({});
@@ -31,6 +32,13 @@ function About() {
   useEffect(() => {
     findDetail();
   }, []);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    console.log("Clicked");
+    setShowModal(true);
+  };
 
   return (
     // <div className="my-4 container">
@@ -171,6 +179,12 @@ function About() {
               className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-5 py-4 px-5 text-primary-emphasis"
               style={{ fontFamily: "'Roboto', sans-serif" }}
             >
+            <div className="form-group my-3 d-flex justify-content-end">
+          <button type="button" className="btn btn-primary" onClick={handleOpenModal}>
+            Edit Details
+          </button>
+        </div>
+        {showModal && <EditCompanyDetails />}
               {data.about}
             </div>
           </div>
