@@ -9,7 +9,7 @@ const CollegeAbout = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [college, setCollege] = useState({});
   const navigate = useNavigate(); 
-  console.log(college);
+  // console.log(college);
 
   const findDetail = async () => {
     try {
@@ -21,11 +21,12 @@ const CollegeAbout = () => {
       });
       const collegeData = response.data.data;
       setData(collegeData);
+      console.log(collegeData);
 
       const data = await axios.post("/api/college/findcollege", {token});
       const collegeNam = data.data.data;
       setCollege(collegeNam);
-      console.log(collegeNam);
+      // console.log(collegeNam);
 
       setIsLoading(false);
     } catch (error) {

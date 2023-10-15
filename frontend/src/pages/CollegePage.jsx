@@ -18,7 +18,7 @@ const CompanyPage = () => {
       const data = await axios.post("/api/college/findcollege", {token});
       const collegeData = data.data.data;
       setCollege(collegeData);
-      console.log(collegeData);
+      // console.log(collegeData);
       if (collegeData.firstLogin) {
         setShowModal(true); 
       }
