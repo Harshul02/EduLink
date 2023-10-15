@@ -110,16 +110,7 @@ const CompanyDetails = (props) => {
         </div>
         <div className="form-group my-3">
           <label htmlFor="domains">Tech Domains:</label>
-          {/* <textarea
-            className="form-control"
-            name="domains"
-            id="domains"
-            cols="30"
-            rows="1"
-            value={formData.domains}
-            onChange={handleInputChange}
-            required
-          /> */}
+
           <TagsInput value={formData.domains} onChange={handleTagsChange} required/>
         </div>
         <div className="form-group my-3">

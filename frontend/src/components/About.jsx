@@ -22,6 +22,7 @@ function About() {
       console.log(companyData);
       const data = await axios.post("/api/company/findcompany", { token });
       const companyNam = data.data.data;
+      console.log(data)
       setCompany(companyNam);
       setIsLoading(false);
     } catch (error) {
@@ -39,6 +40,9 @@ function About() {
     console.log("Clicked");
     setShowModal(true);
   };
+  const handleCloseModal = () =>{
+    setShowModal(false);
+  }
 
   return (
     // <div className="my-4 container">
@@ -50,49 +54,7 @@ function About() {
         <div class="spinner-border" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>      ) : (
-        /*
-          div style={{ textAlign: "left" }}>
-          {data.about && (
-            <div className="my-3">
-              <h4>About Company</h4>
-              <p className="mx-3">{data.about}</p>
-            </div>
-          )}
-          {data.moto && (
-            <div className="my-4">
-              <h4>Company's Moto</h4>
-              <p className="mx-3">{data.moto}</p>
-            </div>
-          )}
-          {data.employees && (
-            <div className="my-4">
-              <h4>Number of Employees</h4>
-              <p className="mx-3">
-                We have around {data.employees} employees working in our company
-              </p>
-            </div>
-          )}
-          {data.ethics && (
-            <div className="my-4">
-              <h4>Company Values and Ethics</h4>
-              <p className="mx-3">{data.ethics}</p>
-            </div>
-          )}
-          {data.domains && (
-            <div className="my-4">
-              <h4>Tech Domains</h4>
-              <p className="mx-3">{data.domains}</p>
-            </div>
-          )}
-          {data.location && (
-            <div className="my-4">
-              <h4>Location</h4>
-              <p className="mx-3">{data.location}</p>
-            </div>
-          )}
-        </div>
-        */
-       
+        
         <div class="row">
                {companyId && (
         <Link
@@ -184,7 +146,42 @@ function About() {
             Edit Details
           </button>
         </div>
-        {showModal && <EditCompanyDetails />}
+        {showModal && (
+  <div>
+    {/* Add the custom modal backdrop with inline CSS */}
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', /* Semi-transparent background color */
+        zIndex: 1040, /* Ensure it's above the modal */
+      }}
+      onClick={handleCloseModal}
+    ></div>
+    <div className="modal fade show" style={{ display: 'block' }}>
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle">
+              Welcome to the EduLink
+            </h5>
+            <button type="button" className="close" onClick={handleCloseModal}>
+              <span>&times;</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            {/* <p>Enter Details!</p> */}
+            <EditCompanyDetails closeModal={showModal} existingData={data} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
               {data.about}
             </div>
           </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion as m } from 'framer-motion';
 import { About, Tieups,CollegeHistory, CollegeList, Navbar } from '../components/index';
 import axios from 'axios';
 import CompanyDetails from '../components/CompanyDetails';
@@ -63,16 +62,7 @@ const CompanyPage = () => {
 
                 <CompanyDetails setModal={setShowModal}/>
               </div>
-              {/* <div className="modal-footer"> */}
-                {/* <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button> */}
-                {/* You can add more buttons or actions here if needed */}
-              {/* </div> */}
+             
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom"; 
+import EditCollegeDetails from "./EditCollegeDetails";
 
 
 const CollegeAbout = () => {
@@ -13,11 +14,9 @@ const CollegeAbout = () => {
 
   const findDetail = async () => {
     try {
-      // const token = localStorage.getItem("collegetoken");
-      // console.log(token);
       const token = collegeId || localStorage.getItem("collegetoken");  
       const response = await axios.post("/api/college/getcollegedetail", {
-        token:token,
+        token,
       });
       const collegeData = response.data.data;
       setData(collegeData);
@@ -36,7 +35,16 @@ const CollegeAbout = () => {
 
   useEffect(() => {
     findDetail();
-  }, [collegeId]);
+  }, []);
+
+  const [showModal, setShowModal] = useState(false);
+  const handleOpenModal = () => {
+    console.log("Clicked");
+    setShowModal(true);
+  };
+  const handleCloseModal = () =>{
+    setShowModal(false);
+  }
 
   return (
     <div
@@ -47,50 +55,7 @@ const CollegeAbout = () => {
         <div class="spinner-border" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>      ) : (
-        /*
-          <div style={{ textAlign: "left" }}>
-            {data.about && (
-              <div className="my-3">
-                <h4>About College</h4>
-                <p className="mx-3">{data.about}</p>
-              </div>
-            )}
-            {data.moto && (
-              <div className="my-4">
-                <h4>College's Moto</h4>
-                <p className="mx-3">{data.moto}</p>
-              </div>
-            )}
-            {data.employees && (
-              <div className="my-4">
-                <h4>Number of Students (Current)</h4>
-                <p className="mx-3">
-                  We have around {data.employees} students currently studying.
-                </p>
-              </div>
-            )}
-            {data.ethics && (
-              <div className="my-4">
-                <h4>College Values and Ethics</h4>
-                <p className="mx-3">{data.ethics}</p>
-              </div>
-            )}
-            {data.domains && (
-              <div className="my-4">
-                <h4>Companies Visited</h4>
-                <p className="mx-3">{data.domains}</p>
-              </div>
-            )}
-            {data.location && (
-              <div className="my-4">
-                <h4>Location</h4>
-                <p className="mx-3">{data.location}</p>
-              </div>
-            )}
-          </div>
-          */
-        // <div class="row">
-
+        
         <div class="row">
                
                     {collegeId && <p className=" display-1 font-weight-bold">{college.collegeName}</p>}
@@ -174,6 +139,54 @@ const CollegeAbout = () => {
               className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-5 py-4 px-5 text-primary-emphasis"
               style={{ fontFamily: "'Roboto', sans-serif" }}
             >
+
+
+<div className="form-group my-3 d-flex justify-content-end">
+          <button type="button" className="btn btn-primary" onClick={handleOpenModal}>
+            Edit Details
+          </button>
+        </div>
+        {showModal && (
+  <div>
+    {/* Add the custom modal backdrop with inline CSS */}
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', /* Semi-transparent background color */
+        zIndex: 1040, /* Ensure it's above the modal */
+      }}
+      onClick={handleCloseModal}
+    ></div>
+    <div className="modal fade show" style={{ display: 'block' }}>
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle">
+              Welcome to the EduLink
+            </h5>
+            <button type="button" className="close" onClick={handleCloseModal}>
+              <span>&times;</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            {/* <p>Enter Details!</p> */}
+            <EditCollegeDetails closeModal={showModal} existingData={data} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+              
+
+
+
+
+
               {data.about}
             </div>
           </div>

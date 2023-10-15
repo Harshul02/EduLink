@@ -4,14 +4,16 @@ import { toast } from "react-hot-toast";
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css'
 
-const EditCompanyDetails = ({closeModal,existingData}) => {
+const EditCollegeDetails = ({closeModal,existingData}) => {
     
-  const token = localStorage.getItem("companytoken");
+  const token = localStorage.getItem("collegetoken");
   
 
   const [formData, setFormData] = useState({
    ...existingData,
    domains: existingData.domains || [],
+   companiesvisited: existingData.companiesvisited || [],
+
   });
 
   const handleFormSubmit = async (e) => {
@@ -21,7 +23,7 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
 
   try {
     
-    const response = await axios.post("/api/company/updatedetails", {
+    const response = await axios.post("/api/college/updatedetails", {
       token,
       about: formData.about,
       moto: formData.moto,
@@ -29,11 +31,17 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
       ethics: formData.ethics,
       domains: formData.domains,
       location: formData.location,
-      studentdomain: formData.studentdomain,
-      hiringperiod: formData.hiringperiod,
-      successstories: formData.successstories,
-      industrypartnership: formData.industrypartnership,
-      workculture: formData.workculture,
+      studentsplaced: formData.studentsplaced,
+      naacranking: formData.naacranking,
+      maxpackage: formData.maxpackage,
+      averagepackage: formData.averagepackage,
+      alumninetwork: formData.alumninetwork,
+      foreigntieups: formData.foreigntieups,
+      researchpapers: formData.researchpapers,
+      internshipoffered: formData.internshipoffered,
+      companiesvisited: formData.companiesvisited,
+      
+
     });
 
     if (response.data.success) { 
@@ -60,6 +68,10 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
   const handleTagsChange = (tags) => {
     setFormData((prevData) => ({ ...prevData, domains: tags }));
   };
+  const handleCompaniesChange = (companys) => {
+    setFormData((prevData) => ({ ...prevData, companiesvisited : companys }));
+  };
+
   
   
 
@@ -127,25 +139,25 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
         </div>
         
         <div className="form-group my-3">
-          <label htmlFor="studentdomain">Student Domain:</label>
+          <label htmlFor="studentsplaced">Student Placed:</label>
           <input
             type="text"
             className="form-control"
-            id="studentdomain"
-            name="studentdomain"
-            value={formData.studentdomain}
+            id="studentsplaced"
+            name="studentsplaced"
+            value={formData.studentsplaced}
             onChange={handleInputChange}
             required
           />
         </div>
         <div className="form-group my-3">
-          <label htmlFor="hiringperiod">Hiring Period:</label>
+          <label htmlFor="naacranking">NAAC Ranking:</label>
           <input
             type="text"
             className="form-control"
-            id="hiringperiod"
-            name="hiringperiod"
-            value={formData.hiringperiod}
+            id="naacranking"
+            name="naacranking"
+            value={formData.naacranking}
             onChange={handleInputChange}
             required
           />
@@ -154,43 +166,87 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
 
 
         <div className="form-group my-3">
-          <label htmlFor="successstories">Success Stories:</label>
+          <label htmlFor="maxpackage">Max Package:</label>
           <input
             type="text"
             className="form-control"
-            id="successstories"
-            name="successstories"
-            value={formData.successstories}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="form-group my-3">
-          <label htmlFor="industrypartnership">Industry Partnership:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="industrypartnership"
-            name="industrypartnership"
-            value={formData.industrypartnership}
+            id="maxpackage"
+            name="maxpackage"
+            value={formData.maxpackage}
             onChange={handleInputChange}
             required
           />
         </div>
 
         <div className="form-group my-3">
-          <label htmlFor="workculture">Work Culture:</label>
+          <label htmlFor="averagepackage">Average Package:</label>
           <input
             type="text"
             className="form-control"
-            id="workculture"
-            name="workculture"
-            value={formData.workculture}
+            id="averagepackage"
+            name="averagepackage"
+            value={formData.averagepackage}
             onChange={handleInputChange}
             required
           />
         </div>
+
+        <div className="form-group my-3">
+          <label htmlFor="alumninetwork">Alumni Network:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="alumninetwork"
+            name="alumninetwork"
+            value={formData.alumninetwork}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group my-3">
+          <label htmlFor="foreigntieups">Foreign Tieups:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="foreigntieups"
+            name="foreigntieups"
+            value={formData.foreigntieups}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group my-3">
+          <label htmlFor="researchpapers">Reasearch Papers:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="researchpapers"
+            name="researchpapers"
+            value={formData.researchpapers}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group my-3">
+          <label htmlFor="internshipoffered">Internships Offered:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="internshipoffered"
+            name="internshipoffered"
+            value={formData.internshipoffered}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group my-3">
+          <label htmlFor="companiesvisited">Companies Visited:</label>
+          <TagsInput value={formData.companiesvisited} onChange={handleCompaniesChange} required/>
+        </div>
+
+        
 
        <button type="submit" className="btn btn-primary">
           Submit
@@ -202,4 +258,4 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
   );
 };
 
-export default EditCompanyDetails;
+export default EditCollegeDetails;

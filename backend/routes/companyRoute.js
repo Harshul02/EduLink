@@ -159,3 +159,49 @@ router.post("/register", async (req, res) => {
   })
 
   module.exports = router;
+
+  // Editing
+  router.post('/updatedetails', async (req, res) => {
+    try {
+      const companyId = req.body.token;
+      const updatedData = {
+        about: req.body.about,
+        moto: req.body.moto,
+        employees: req.body.employees,
+        ethics: req.body.ethics,
+        domains: req.body.domains,
+        location: req.body.location,
+        studentdomain: req.body.studentdomain,
+        hiringperiod: req.body.hiringperiod,
+        successstories: req.body.successstories,
+        industrypartnership: req.body.industrypartnership,
+        workculture: req.body.workculture,
+        
+      };
+  
+      
+      const result = await CompanyDetails.findOneAndUpdate(
+        { id: companyId }, 
+        updatedData,
+        { new: true } 
+      );
+  
+      if (result) {
+        res.status(200).json({
+          data: result,
+          message: 'Company details updated successfully',
+          success: true,
+        });
+      } else {
+        res.status(404).json({
+          message: 'Company not found or details not updated',
+          success: false,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+        success: false,
+      });
+    }
+  });
