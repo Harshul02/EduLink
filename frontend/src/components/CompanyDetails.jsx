@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import TagsInput from 'react-tagsinput'
+
+import 'react-tagsinput/react-tagsinput.css'
 
 const CompanyDetails = (props) => {
     // console.log(props);
@@ -9,7 +12,7 @@ const CompanyDetails = (props) => {
     moto: "",
     employees: "",
     ethics: "",
-    domains: "",
+    domains: [],
     location: "",
   });
 
@@ -40,6 +43,10 @@ const CompanyDetails = (props) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleTagsChange = (tags) => {
+    setFormData((prevData) => ({ ...prevData, domains: tags }));
   };
 
   return (
@@ -98,7 +105,7 @@ const CompanyDetails = (props) => {
         </div>
         <div className="form-group my-3">
           <label htmlFor="domains">Tech Domains:</label>
-          <textarea
+          {/* <textarea
             className="form-control"
             name="domains"
             id="domains"
@@ -107,11 +114,12 @@ const CompanyDetails = (props) => {
             value={formData.domains}
             onChange={handleInputChange}
             required
-          />
+          /> */}
+          <TagsInput value={formData.domains} onChange={handleTagsChange} required/>
         </div>
         <div className="form-group my-3">
           <label htmlFor="location">Company's Location:</label>
-          <input className="form-control" type="text" name="location" id="location" value={formData.location} onChange={handleInputChange}/>
+          <input className="form-control" type="text" name="location" id="location" value={formData.location} onChange={handleInputChange} required/>
         </div>
         <button type="submit" className="btn btn-primary">
           Submit
