@@ -22,7 +22,7 @@ const collegeDetailSchema = new mongoose.Schema({
     required: true,
   },
   domains: {
-    type: String,
+    type: Array,
     required: true,
   },
   location: {
