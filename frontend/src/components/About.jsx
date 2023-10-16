@@ -169,7 +169,8 @@ function About() {
                   Tech Domains
                 </button>
                 <div class="collapse" id="collapseExample">
-                  <div class="card card-body">{data.domains}</div>
+                  <div class="card card-body">{data.domains}
+                  </div>
                 </div>
               </div>
             </div>
