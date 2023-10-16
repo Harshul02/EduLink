@@ -91,7 +91,9 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
     borderRadius: '4px',
     cursor: 'pointer',
     transition: 'background-color 0.2s',
-  }} onClick={()=>navigate(`${collegeData._id}/view/collegeabout`)}>About</button>
+    marginLeft:"5px"
+  }} onClick={()=>navigate(`${collegeData._id}/view/collegeabout`)}>About           <i class="bi bi-box-arrow-up-right"></i>
+  </button>
 
       </div>
     </div>

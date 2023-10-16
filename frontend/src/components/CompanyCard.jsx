@@ -88,7 +88,9 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
     borderRadius: '4px',
     cursor: 'pointer',
     transition: 'background-color 0.2s',
-  }} onClick={()=>navigate(`${companyData._id}/view/companyabout`)}>About</button>
+    marginLeft:"5px"
+  }} onClick={()=>navigate(`${companyData._id}/view/companyabout`)}>About           <i class="bi bi-box-arrow-up-right"></i>
+  </button>
           </div>
         </div>
       );

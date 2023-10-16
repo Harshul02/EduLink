@@ -33,7 +33,7 @@ const CompanyPage = () => {
     findUser();
   }, []);
 
-  const [selectedItem, setSelectedItem] = useState('company');
+  const [selectedItem, setSelectedItem] = useState('about');
 
   const handleNavItemClick = (item) => {
     setSelectedItem(item);
