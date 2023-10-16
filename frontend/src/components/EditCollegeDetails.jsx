@@ -13,6 +13,7 @@ const EditCollegeDetails = ({closeModal,existingData}) => {
    ...existingData,
    domains: existingData.domains || [],
    companiesvisited: existingData.companiesvisited || [],
+   
 
   });
 

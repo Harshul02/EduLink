@@ -47,34 +47,7 @@ const CheckAboutCompany = () => {
     findDetail();
   }, []);
   return (
-    // <div>
-    //   <div className="container">
-    //   <div>
-    //     <h4 className='center'>Company About</h4>
-    //     <p className="center">{data.about}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>Company Moto</h4>
-    //     <p className="center">{data.moto}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>Company Ethics</h4>
-    //     <p className="center">{data.ethics}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>Company website</h4>
-    //     <p className="center"><a href={`${data.website}`} target='_blank'>{data.website}</a></p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>Company Domain</h4>
-    //     <p className="center">{data.domains}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>Company Hiring</h4>
-    //     <p className="center">{data.hiringperiod}</p>
-    //     </div>
-    //   </div>
-    // </div>
+    
     <div
       className="my-5 container-md text-center"
       style={{ width: "70%", marginTop: "30px" }}
@@ -245,36 +218,38 @@ const CheckAboutCompany = () => {
               style={{ width: "94%", padding: "20px", borderRadius: "10px" }}
             >
               <div className="container text-center">
-                <div className="d-flex flex-column align-items-center">
-                  <Marquee style={{ width: "100%" }}>
-                    {items.map((item, index) => (
-                      <div className="card2" key={index}>
-                        <h5
-                          className="text-white"
-                          style={{ fontStyle: "italic" }}
-                        >
-                          {item}
-                        </h5>
-                      </div>
-                    ))}
-                  </Marquee>
-                  <Marquee
-                    direction="right"
-                    style={{ width: "100%", marginTop: "25px" }}
-                  >
-                    {items.map((item, index) => (
-                      <div className="card2" key={index}>
-                        <h5
-                          className="text-white"
-                          style={{ fontStyle: "italic" }}
-                        >
-                          {item}
-                        </h5>
-                      </div>
-                    ))}
-                  </Marquee>
-                </div>
-              </div>
+  <div className="d-flex flex-column align-items-center">
+    {data.industrypartnership.length === 0 ? (
+      <p style={{ color: "white", fontStyle: "italic" }}>Not available yet</p>
+    ) : (
+      <div>
+        <Marquee style={{ width: "100%" }}>
+          {data.industrypartnership.map((item, index) => (
+            <div className="card2" key={index}>
+              <h5 className="text-white" style={{ fontStyle: "italic" }}>
+                {item}
+              </h5>
+            </div>
+          ))}
+        </Marquee>
+        <Marquee
+          direction="right"
+          style={{ width: "100%", marginTop: "25px" }}
+        >
+          {data.industrypartnership.map((item, index) => (
+            <div className="card2" key={index}>
+              <h5 className="text-white" style={{ fontStyle: "italic" }}>
+                {item}
+              </h5>
+            </div>
+          ))}
+        </Marquee>
+      </div>
+    )}
+  </div>
+</div>
+
+              
             </section>
           </div>
 
@@ -293,36 +268,36 @@ const CheckAboutCompany = () => {
               />
             </h1>
           </div>
-          <div className="horizontal-scroll-carousel align-items-end justify-content-end d-flex  ">
-            <Marquee
-              className="rounded-2"
-              pauseOnHover="true"
-              style={{ width: "95%" }}
-            >
-              {items.map((item, index) => (
-                <div
-                  className="card m-2 rounded-3"
-                  key={index}
-                  style={{
-                    width: "18rem",
-                    background: "rgba(225,225,225,0.1)",
-                  }}
-                >
-                  <div className="card-body">
-                    <p className="text-danger text-bold-500">
-                      <i>"</i>
-                      <em>{item}</em>
-                      <i>"</i>
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </Marquee>
+          {data.successstories.length === 0 ? (
+   <p style={{ fontStyle: "italic", fontSize: "24px", color: "gray", margin: "20px" }}>
+   Nothing to display yet
+ </p>
+) : (
+  <div className="horizontal-scroll-carousel align-items-end justify-content-end d-flex">
+    <Marquee className="rounded-2" pauseOnHover="true" style={{ width: "95%" }}>
+      {data.successstories.map((item, index) => (
+        <div className="card m-2 rounded-3" key={index} style={{ width: "18rem", background: "rgba(225, 225, 225, 0.1)" }}>
+          <div className="card-body">
+            <p className="text-danger text-bold-500">
+              <i>"</i>
+              <em>{item}</em>
+              <i>"</i>
+            </p>
           </div>
+        </div>
+      ))}
+    </Marquee>
+  </div>
+)}
+
+
+
+
+          
         </div>
       )}
     </div>
   );
-};
+}
 
 export default CheckAboutCompany;
