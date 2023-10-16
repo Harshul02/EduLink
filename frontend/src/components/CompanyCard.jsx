@@ -1,9 +1,11 @@
 import React from 'react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
-
+  const navigate = useNavigate();
+  // console.log(companyData);
   const [acceptedstatuscompany, setAcceptedcompany] = useState("");
   useEffect(() => {
     async function fetchTieUpStatus() {
@@ -76,6 +78,17 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
     cursor: 'pointer',
     transition: 'background-color 0.2s',
   }}>{acceptedstatuscompany}</button>
+
+  <button style={{
+    padding: '10px 20px',
+    fontSize: '16px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+  }} onClick={()=>navigate(`${companyData._id}/view/companyabout`)}>About</button>
           </div>
         </div>
       );

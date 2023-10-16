@@ -10,6 +10,7 @@ const CompanyDetails = (props) => {
   const [formData, setFormData] = useState({
     about: "",
     moto: "",
+    website: "",
     employees: "",
     ethics: "",
     domains: [],
@@ -79,6 +80,10 @@ const CompanyDetails = (props) => {
           />
         </div>
         <div className="form-group my-3">
+          <label htmlFor="website">Company's Website:</label>
+          <input className="form-control" type="url" name="website" id="website" value={formData.website} onChange={handleInputChange} required/>
+        </div>
+        <div className="form-group my-3">
           <label htmlFor="employees">Number of Employes:</label>
           <input
             type="number"
@@ -105,16 +110,7 @@ const CompanyDetails = (props) => {
         </div>
         <div className="form-group my-3">
           <label htmlFor="domains">Tech Domains:</label>
-          {/* <textarea
-            className="form-control"
-            name="domains"
-            id="domains"
-            cols="30"
-            rows="1"
-            value={formData.domains}
-            onChange={handleInputChange}
-            required
-          /> */}
+
           <TagsInput value={formData.domains} onChange={handleTagsChange} required/>
         </div>
         <div className="form-group my-3">

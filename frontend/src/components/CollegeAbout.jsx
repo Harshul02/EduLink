@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/scrollbar";
 import "./about.css";
+import EditCollegeDetails from "./EditCollegeDetails";
 
 import { FreeMode, Scrollbar, Mousewheel } from "swiper/modules";
 
@@ -54,11 +55,9 @@ const CollegeAbout = () => {
 
   const findDetail = async () => {
     try {
-      // const token = localStorage.getItem("collegetoken");
-      // console.log(token);
       const token = collegeId || localStorage.getItem("collegetoken");
       const response = await axios.post("/api/college/getcollegedetail", {
-        token: token,
+        token,
       });
       const collegeData = response.data.data;
       setData(collegeData);
@@ -77,7 +76,16 @@ const CollegeAbout = () => {
 
   useEffect(() => {
     findDetail();
-  }, [collegeId]);
+  }, []);
+
+  const [showModal, setShowModal] = useState(false);
+  const handleOpenModal = () => {
+    console.log("Clicked");
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <div
@@ -89,50 +97,6 @@ const CollegeAbout = () => {
           <span class="visually-hidden">Loading...</span>
         </div>
       ) : (
-        /*
-          <div style={{ textAlign: "left" }}>
-            {data.about && (
-              <div className="my-3">
-                <h4>About College</h4>
-                <p className="mx-3">{data.about}</p>
-              </div>
-            )}
-            {data.moto && (
-              <div className="my-4">
-                <h4>College's Moto</h4>
-                <p className="mx-3">{data.moto}</p>
-              </div>
-            )}
-            {data.employees && (
-              <div className="my-4">
-                <h4>Number of Students (Current)</h4>
-                <p className="mx-3">
-                  We have around {data.employees} students currently studying.
-                </p>
-              </div>
-            )}
-            {data.ethics && (
-              <div className="my-4">
-                <h4>College Values and Ethics</h4>
-                <p className="mx-3">{data.ethics}</p>
-              </div>
-            )}
-            {data.domains && (
-              <div className="my-4">
-                <h4>Companies Visited</h4>
-                <p className="mx-3">{data.domains}</p>
-              </div>
-            )}
-            {data.location && (
-              <div className="my-4">
-                <h4>Location</h4>
-                <p className="mx-3">{data.location}</p>
-              </div>
-            )}
-          </div>
-          */
-        // <div class="row">
-
         <div class="row">
           {collegeId && (
             <p className=" display-1 font-weight-bold">{college.collegeName}</p>
@@ -179,7 +143,12 @@ const CollegeAbout = () => {
                           <i class="icon-user warning font-large-2 float-left"></i>
                         </div>
                         <div class="media-body text-right float-end">
-                          <h3>{data.naacranking}</h3>
+                          <h3>
+                            {data.naacranking ===
+                            "Details will be available soon"
+                              ? "N/A"
+                              : data.naacranking}
+                          </h3>
                           <span>NIRF Ranking</span>
                         </div>
                       </div>
@@ -248,6 +217,15 @@ const CollegeAbout = () => {
             >
               <SwiperSlide>{data.about}</SwiperSlide>
             </Swiper>
+            <div className="form-group my-3 d-flex justify-content-end">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleOpenModal}
+              >
+                Edit Details
+              </button>
+            </div>
           </div>
 
           <div className="horizontal-scroll-carousel align-items-end justify-content-end d-flex ">
@@ -258,6 +236,7 @@ const CollegeAbout = () => {
                 </h5>
                 <p className="card-text1 fs-6 text-dark">{data.maxpackage}</p>
               </div>
+
               <div className="card1 border border-3 border-primary rounded-3 shadow">
                 <h5 className="card-title1 fs-5 text-primary">
                   Average Package
@@ -298,6 +277,56 @@ const CollegeAbout = () => {
                   {data.internshipoffered}
                 </p>
               </div>
+
+              {showModal && (
+                <div>
+                  {/* Add the custom modal backdrop with inline CSS */}
+                  <div
+                    style={{
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor:
+                        "rgba(0, 0, 0, 0.5)" /* Semi-transparent background color */,
+                      zIndex: 1040 /* Ensure it's above the modal */,
+                    }}
+                    onClick={handleCloseModal}
+                  ></div>
+                  <div className="modal fade show" style={{ display: "block" }}>
+                    <div
+                      className="modal-dialog modal-dialog-centered"
+                      role="document"
+                    >
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="exampleModalLongTitle"
+                          >
+                            Welcome to the EduLink
+                          </h5>
+                          <button
+                            type="button"
+                            className="close"
+                            onClick={handleCloseModal}
+                          >
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          {/* <p>Enter Details!</p> */}
+                          <EditCollegeDetails
+                            closeModal={showModal}
+                            existingData={data}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className=" align-items-center justify-content-center d-flex mt-4">
