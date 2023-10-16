@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import TagsInput from 'react-tagsinput';
-import 'react-tagsinput/react-tagsinput.css'
+import 'react-tagsinput/react-tagsinput.css';
+import { FaTrash } from "react-icons/fa";
 
 const EditCompanyDetails = ({closeModal,existingData}) => {
     
@@ -12,7 +13,13 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
   const [formData, setFormData] = useState({
    ...existingData,
    domains: existingData.domains || [],
+   successstories: existingData.successstories || [],
+   studentdomain: existingData.studentdomain || [],
+   industrypartnership: existingData.industrypartnership || [],
   });
+  const [isAddingStory, setIsAddingStory] = useState(false);
+  const [newStory, setNewStory] = useState("");
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
@@ -59,6 +66,40 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
 
   const handleTagsChange = (tags) => {
     setFormData((prevData) => ({ ...prevData, domains: tags }));
+  };
+  const handledomainsChange = (dom) => {
+    setFormData((prevData) => ({ ...prevData, studentdomain: dom }));
+  };
+  const handleindustryChange = (Industry) => {
+    setFormData((prevData) => ({ ...prevData, industrypartnership: Industry}));
+  };
+
+  
+  const handleAddStory = () => {
+    setIsAddingStory(true);
+  };
+
+  const handleSaveStory = () => {
+    if (newStory) {
+      setFormData((prevData) => ({
+        ...prevData,
+        successstories: [...prevData.successstories, newStory],
+      }));
+      setNewStory("");
+      setIsAddingStory(false);
+    }
+  };
+
+  const handleCancelAddStory = () => {
+    setNewStory("");
+    setIsAddingStory(false);
+  };
+
+  const handleDeleteStory = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      successstories: prevData.successstories.filter((_, i) => i !== index),
+    }));
   };
   
   
@@ -127,16 +168,8 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
         </div>
         
         <div className="form-group my-3">
-          <label htmlFor="studentdomain">Student Domain:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="studentdomain"
-            name="studentdomain"
-            value={formData.studentdomain}
-            onChange={handleInputChange}
-            required
-          />
+          <label htmlFor="studentdomain">Student Domains:</label>
+          <TagsInput value={formData.studentdomain} onChange={handledomainsChange} required/>
         </div>
         <div className="form-group my-3">
           <label htmlFor="hiringperiod">Hiring Period:</label>
@@ -153,32 +186,51 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
 
 
 
-        <div className="form-group my-3">
-          <label htmlFor="successstories">Success Stories:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="successstories"
-            name="successstories"
-            value={formData.successstories}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+        <div className="form-group my-3" style={{ border: "1px solid #ccc", padding: "15px", borderRadius: "5px", backgroundColor: "#f7f7f7" }}>
+  <label htmlFor="successstories" style={{ fontWeight: "bold", fontSize: "18px", display: "block", marginBottom: "10px" }}>Success Stories:</label>
+  <ul style={{ listStyle: "none", padding: "0" }}>
+    {formData.successstories.map((story, index) => (
+      <li key={index} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px", padding: "10px", backgroundColor: "#fff" }}>
+        <span style={{ flex: "1", fontSize: "16px" }}>{story}</span>
+        <button style={{ backgroundColor: "#f44336", color: "#fff", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "16px" }} onClick={() => handleDeleteStory(index)}>
+        
+        <FaTrash />
+          
+        </button>
+      </li>
+    ))}
+    {isAddingStory ? (
+      <li className="success-item">
+        <input
+          type="text"
+          className="form-control story-input"
+          style={{ width: "100%", padding: "5px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "16px" }}
+          placeholder="New Story"
+          value={newStory}
+          onChange={(e) => setNewStory(e.target.value)}
+        />
+        <button style={{ backgroundColor: "#4CAF50", color: "#fff", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "16px" }} onClick={handleSaveStory}>Save</button>
+        <button style={{ backgroundColor: "#ccc", color: "#fff", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "16px" }} onClick={handleCancelAddStory}>Cancel</button>
+      </li>
+    ) : (
+      <li>
+        <span
+          className="add-story-button"
+          style={{ backgroundColor: "#2196F3", color: "#fff", padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "18px" }}
+          onClick={handleAddStory}
+        >
+          + Add Story
+        </span>
+      </li>
+    )}
+  </ul>
+</div>
 
-        <div className="form-group my-3">
+
+      <div className="form-group my-3">
           <label htmlFor="industrypartnership">Industry Partnership:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="industrypartnership"
-            name="industrypartnership"
-            value={formData.industrypartnership}
-            onChange={handleInputChange}
-            required
-          />
+          <TagsInput value={formData.industrypartnership} onChange={handleindustryChange} required/>
         </div>
-
         <div className="form-group my-3">
           <label htmlFor="workculture">Work Culture:</label>
           <input
