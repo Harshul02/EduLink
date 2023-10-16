@@ -188,7 +188,7 @@ const CollegeAbout = () => {
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  Tech Domains
+                  Courses Offered
                 </button>
                 <div class="collapse" id="collapseExample">
                   <div class="card card-body">

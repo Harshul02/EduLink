@@ -34,34 +34,36 @@ const CheckAboutCompany = () => {
         findDetail();
       }, []);
   return (
-    <div>
-      <div className="container">
-      <div>
-        <h4 className='center'>Company About</h4>
-        <p className="center">{data.about}</p>
-        </div>
-      <div>
-        <h4 className='center'>Company Moto</h4>
-        <p className="center">{data.moto}</p>
-        </div>
-      <div>
-        <h4 className='center'>Company Ethics</h4>
-        <p className="center">{data.ethics}</p>
-        </div>
-      <div>
-        <h4 className='center'>Company website</h4>
-        <p className="center"><a href={`${data.website}`} target='_blank'>{data.website}</a></p>
-        </div>
-      <div>
-        <h4 className='center'>Company Domain</h4>
-        <p className="center">{data.domains}</p>
-        </div>
-      <div>
-        <h4 className='center'>Company Hiring</h4>
-        <p className="center">{data.hiringperiod}</p>
-        </div>
-      </div>
-    </div>
+    // <div>
+    //   <div className="container">
+    //   <div>
+    //     <h4 className='center'>Company About</h4>
+    //     <p className="center">{data.about}</p>
+    //     </div>
+    //   <div>
+    //     <h4 className='center'>Company Moto</h4>
+    //     <p className="center">{data.moto}</p>
+    //     </div>
+    //   <div>
+    //     <h4 className='center'>Company Ethics</h4>
+    //     <p className="center">{data.ethics}</p>
+    //     </div>
+    //   <div>
+    //     <h4 className='center'>Company website</h4>
+    //     <p className="center"><a href={`${data.website}`} target='_blank'>{data.website}</a></p>
+    //     </div>
+    //   <div>
+    //     <h4 className='center'>Company Domain</h4>
+    //     <p className="center">{data.domains}</p>
+    //     </div>
+    //   <div>
+    //     <h4 className='center'>Company Hiring</h4>
+    //     <p className="center">{data.hiringperiod}</p>
+    //     </div>
+    //   </div>
+    // </div>
+
+    
   )
 }
 
