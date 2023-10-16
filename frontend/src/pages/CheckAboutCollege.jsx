@@ -46,34 +46,7 @@ const CheckAboutCollege = () => {
         findDetail();
       }, []);
   return (
-    // <div>
-    //   <div className="container">
-    //   <div>
-    //     <h4 className='center'>College About</h4>
-    //     <p className="center">{data.about}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>College Moto</h4>
-    //     <p className="center">{data.moto}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>College Ethics</h4>
-    //     <p className="center">{data.ethics}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>College website</h4>
-    //     <p className="center"><a href={`${data.website}`} target='_blank'>{data.website}</a></p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>College Domain</h4>
-    //     <p className="center">{data.domains}</p>
-    //     </div>
-    //   <div>
-    //     <h4 className='center'>College Alumni Network</h4>
-    //     <p className="center">{data.alumninetwork}</p>
-    //     </div>
-    //   </div>
-    // </div>
+    
       <div
         className="my-5 container-md text-center"
         style={{ width: "70%", marginTop: "30px" }}
@@ -274,44 +247,48 @@ const CheckAboutCollege = () => {
               </h1>
             </div>
             <div className=" align-items-end justify-content-end d-flex">
-              <section
-                id="counter"
-                className="section-padding"
-                style={{ width: "94%", padding: "20px", borderRadius: "10px" }}
-              >
-                <div className="container text-center">
-                  <div className="d-flex flex-column align-items-center">
-                    <Marquee style={{ width: "100%" }}>
-                      {data.companiesvisited.map((company, index) => (
-                        <div className="card2" key={index}>
-                          <h5
-                            className="text-white"
-                            style={{ fontStyle: "italic" }}
-                          >
-                            {company}
-                          </h5>
-                        </div>
-                      ))}
-                    </Marquee>
-                    <Marquee
-                      direction="right"
-                      style={{ width: "100%", marginTop: "25px" }}
-                    >
-                      {data.companiesvisited.map((company, index) => (
-                        <div className="card2" key={index}>
-                          <h5
-                            className="text-white"
-                            style={{ fontStyle: "italic" }}
-                          >
-                            {company}
-                          </h5>
-                        </div>
-                      ))}
-                    </Marquee>
-                  </div>
-                </div>
-              </section>
-            </div>
+            <section
+              id="counter"
+              className="section-padding"
+              style={{ width: "94%", padding: "20px", borderRadius: "10px" }}
+            >
+              
+              <div className="container text-center">
+              <div className="d-flex flex-column align-items-center">
+  {data.companiesvisited.length === 0 ? (
+    <p style={{ fontStyle: "italic", fontSize: "18px", color: "white" }}>
+      No data available yet
+    </p>
+  ) : (
+    <div>
+      <Marquee style={{ width: "100%" }}>
+        {data.companiesvisited.map((company, index) => (
+          <div className="card2" key={index}>
+            <h5 className="text-white" style={{ fontStyle: "italic" }}>
+              {company}
+            </h5>
+          </div>
+        ))}
+      </Marquee>
+      <Marquee
+        direction="right"
+        style={{ width: "100%", marginTop: "25px" }}
+      >
+        {data.companiesvisited.map((company, index) => (
+          <div className="card2" key={index}>
+            <h5 className="text-white" style={{ fontStyle: "italic" }}>
+              {company}
+            </h5>
+          </div>
+        ))}
+      </Marquee>
+    </div>
+  )}
+              </div>
+
+              </div>
+            </section>
+          </div>
           </div>
         )}
       </div>

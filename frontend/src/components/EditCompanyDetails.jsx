@@ -14,7 +14,7 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
    ...existingData,
    domains: existingData.domains || [],
    successstories: existingData.successstories || [],
-   studentdomain: existingData.studentdomain || [],
+   studentdomain: existingData.studentdomain || ["Details Will be Updated Soon"],
    industrypartnership: existingData.industrypartnership || [],
   });
   const [isAddingStory, setIsAddingStory] = useState(false);
@@ -63,7 +63,6 @@ const EditCompanyDetails = ({closeModal,existingData}) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
   const handleTagsChange = (tags) => {
     setFormData((prevData) => ({ ...prevData, domains: tags }));
   };

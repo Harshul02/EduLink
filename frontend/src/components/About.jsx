@@ -10,6 +10,9 @@ import "swiper/css/free-mode";
 import "swiper/css/scrollbar";
 import "./about.css";
 import { FreeMode, Scrollbar, Mousewheel } from "swiper/modules";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
 function About() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -172,7 +175,7 @@ function About() {
                 className="btn btn-primary"
                 onClick={handleOpenModal}
               >
-                Edit Details
+               <FontAwesomeIcon icon={faEdit} />
               </button>
             </div>
             {showModal && (
@@ -278,36 +281,38 @@ function About() {
               style={{ width: "94%", padding: "20px", borderRadius: "10px" }}
             >
               <div className="container text-center">
-                <div className="d-flex flex-column align-items-center">
-                  <Marquee style={{ width: "100%" }}>
-                    {items.map((item, index) => (
-                      <div className="card2" key={index}>
-                        <h5
-                          className="text-white"
-                          style={{ fontStyle: "italic" }}
-                        >
-                          {item}
-                        </h5>
-                      </div>
-                    ))}
-                  </Marquee>
-                  <Marquee
-                    direction="right"
-                    style={{ width: "100%", marginTop: "25px" }}
-                  >
-                    {items.map((item, index) => (
-                      <div className="card2" key={index}>
-                        <h5
-                          className="text-white"
-                          style={{ fontStyle: "italic" }}
-                        >
-                          {item}
-                        </h5>
-                      </div>
-                    ))}
-                  </Marquee>
-                </div>
-              </div>
+  <div className="d-flex flex-column align-items-center">
+    {data.industrypartnership.length === 0 ? (
+      <p style={{ color: "white", fontStyle: "italic" }}>Not available yet</p>
+    ) : (
+      <div>
+        <Marquee style={{ width: "100%" }}>
+          {data.industrypartnership.map((item, index) => (
+            <div className="card2" key={index}>
+              <h5 className="text-white" style={{ fontStyle: "italic" }}>
+                {item}
+              </h5>
+            </div>
+          ))}
+        </Marquee>
+        <Marquee
+          direction="right"
+          style={{ width: "100%", marginTop: "25px" }}
+        >
+          {data.industrypartnership.map((item, index) => (
+            <div className="card2" key={index}>
+              <h5 className="text-white" style={{ fontStyle: "italic" }}>
+                {item}
+              </h5>
+            </div>
+          ))}
+        </Marquee>
+      </div>
+    )}
+  </div>
+</div>
+
+              
             </section>
           </div>
 
@@ -326,21 +331,28 @@ function About() {
               />
             </h1>
           </div>
-          <div className="horizontal-scroll-carousel align-items-end justify-content-end d-flex  ">
-          <Marquee className="rounded-2" pauseOnHover="true" style={{ width: "95%", }}>
-              {items.map((item, index) => (
-                <div className="card m-2 rounded-3" key={index} style={{ width: "18rem",background:"rgba(225,225,225,0.1)" }}>
-                  <div className="card-body">
-                  <p className="text-danger text-bold-500">
-                      <i>"</i>
-                      <em>{item}</em>
-                      <i>"</i>
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </Marquee>
+          {data.successstories.length === 0 ? (
+   <p style={{ fontStyle: "italic", fontSize: "24px", color: "gray", margin: "20px" }}>
+   Nothing to display yet
+ </p>
+) : (
+  <div className="horizontal-scroll-carousel align-items-end justify-content-end d-flex">
+    <Marquee className="rounded-2" pauseOnHover="true" style={{ width: "95%" }}>
+      {data.successstories.map((item, index) => (
+        <div className="card m-2 rounded-3" key={index} style={{ width: "18rem", background: "rgba(225, 225, 225, 0.1)" }}>
+          <div className="card-body">
+            <p className="text-danger text-bold-500">
+              <i>"</i>
+              <em>{item}</em>
+              <i>"</i>
+            </p>
           </div>
+        </div>
+      ))}
+    </Marquee>
+  </div>
+)}
+
 
 
 

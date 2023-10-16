@@ -11,44 +11,15 @@ import "./about.css";
 import EditCollegeDetails from "./EditCollegeDetails";
 
 import { FreeMode, Scrollbar, Mousewheel } from "swiper/modules";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const CollegeAbout = () => {
   const [data, setData] = useState({});
   const { collegeId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [college, setCollege] = useState({});
-  const items = [
-    {
-      id: 1,
-      title: "Highest Package",
-      content: "This is the content of Card 1.",
-    },
-    {
-      id: 2,
-      title: "Average Package",
-      content: "This is the content of Card 2.",
-    },
-    {
-      id: 3,
-      title: "Foreign TieUps",
-      content: "This is the content of Card 3.",
-    },
-    {
-      id: 4,
-      title: "Alumni Network",
-      content: "This is the content of Card 3.",
-    },
-    {
-      id: 5,
-      title: "Research Papers Published",
-      content: "This is the content of Card 3.",
-    },
-    {
-      id: 6,
-      title: "Internships Offered",
-      content: "This is the content of Card 3.",
-    },
-  ];
+  
   const navigate = useNavigate();
 
   // console.log(college);
@@ -66,7 +37,7 @@ const CollegeAbout = () => {
       const data = await axios.post("/api/college/findcollege", { token });
       const collegeNam = data.data.data;
       setCollege(collegeNam);
-      // console.log(collegeNam);
+      
 
       setIsLoading(false);
     } catch (error) {
@@ -218,13 +189,14 @@ const CollegeAbout = () => {
               <SwiperSlide>{data.about}</SwiperSlide>
             </Swiper>
             <div className="form-group my-3 d-flex justify-content-end">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleOpenModal}
-              >
-                Edit Details
-              </button>
+            <button
+  type="button"
+  className="btn btn-primary"
+  onClick={handleOpenModal}
+>
+  <FontAwesomeIcon icon={faEdit} />
+</button>
+
             </div>
           </div>
 
@@ -350,36 +322,40 @@ const CollegeAbout = () => {
               className="section-padding"
               style={{ width: "94%", padding: "20px", borderRadius: "10px" }}
             >
+              
               <div className="container text-center">
-                <div className="d-flex flex-column align-items-center">
-                  <Marquee style={{ width: "100%" }}>
-                    {data.companiesvisited.map((company, index) => (
-                      <div className="card2" key={index}>
-                        <h5
-                          className="text-white"
-                          style={{ fontStyle: "italic" }}
-                        >
-                          {company}
-                        </h5>
-                      </div>
-                    ))}
-                  </Marquee>
-                  <Marquee
-                    direction="right"
-                    style={{ width: "100%", marginTop: "25px" }}
-                  >
-                    {data.companiesvisited.map((company, index) => (
-                      <div className="card2" key={index}>
-                        <h5
-                          className="text-white"
-                          style={{ fontStyle: "italic" }}
-                        >
-                          {company}
-                        </h5>
-                      </div>
-                    ))}
-                  </Marquee>
-                </div>
+              <div className="d-flex flex-column align-items-center">
+  {data.companiesvisited.length === 0 ? (
+    <p style={{ fontStyle: "italic", fontSize: "18px", color: "white" }}>
+      No data available yet
+    </p>
+  ) : (
+    <div>
+      <Marquee style={{ width: "100%" }}>
+        {data.companiesvisited.map((company, index) => (
+          <div className="card2" key={index}>
+            <h5 className="text-white" style={{ fontStyle: "italic" }}>
+              {company}
+            </h5>
+          </div>
+        ))}
+      </Marquee>
+      <Marquee
+        direction="right"
+        style={{ width: "100%", marginTop: "25px" }}
+      >
+        {data.companiesvisited.map((company, index) => (
+          <div className="card2" key={index}>
+            <h5 className="text-white" style={{ fontStyle: "italic" }}>
+              {company}
+            </h5>
+          </div>
+        ))}
+      </Marquee>
+    </div>
+  )}
+              </div>
+
               </div>
             </section>
           </div>
