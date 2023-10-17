@@ -58,7 +58,7 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
       };
     
       return (
-        <div className="college-card card mb-3" onClick={handleClick} style={{ width: "80%" }}>
+        <div className="college-card card mb-3 " onClick={handleClick} style={{ width: "80%",cursor:"pointer" }}>
           <div className="card-body">
             <h5 className="card-title">{companyData.companyName}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{companyData.companyType}</h6>

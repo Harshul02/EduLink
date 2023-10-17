@@ -3,7 +3,7 @@ import axios from "axios";
 import CompanyCard from "./CompanyCard";
 import { io } from "socket.io-client";
 import Chat from "./Chat";
-
+import './search.css'
 const CompanyList = () => {
   const [companyDataList, setCompanyDataList] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -46,6 +46,13 @@ const CompanyList = () => {
           className="col-md-6"
           style={{ overflowY: "auto", maxHeight: "70vh" }}
         >
+           <div class="search">
+            <input type="text" class="search-input" placeholder="Search..." name=""/>
+            <a href="#" class="search-icon">
+              <i class="fa fa-search"></i>
+            </a>
+          </div>
+          
           {companyDataList.map((companyData) => (
             <CompanyCard
               key={companyData._id}

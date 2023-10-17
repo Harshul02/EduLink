@@ -43,10 +43,12 @@ const CollegeList = () => {
   return (
     <div className="container" style={{ width: "80%" }}>
       <div className="row">
+        
         <div
           className="col-md-6"
           style={{ overflowY: "auto", maxHeight: "70vh" }}
         >
+          
           {collegeDataList.map((collegeData) => (
             <CollegeCard
               key={collegeData._id}
