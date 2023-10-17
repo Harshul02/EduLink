@@ -10,6 +10,7 @@ const CompanyList = () => {
   const [socket, setSocket] = useState(null);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [expanded, setExpanded] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const toggleCollapse = () => {
     setExpanded(!expanded);
@@ -39,6 +40,14 @@ const CompanyList = () => {
       prevSelected === companyData ? null : companyData
     );
   };
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  // Filtering
+  const filteredCompanyData = companyDataList.filter((companyData) =>
+    companyData.companyName.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   return (
     <div className="container" style={{ width: "80%" }}>
@@ -52,17 +61,18 @@ const CompanyList = () => {
               <input
                 type="text"
                 class="search-input"
+                value={searchInput}
                 placeholder="Search..."
+                onChange={handleSearchInputChange}
                 name=""
               />
               <a href="#" class="search-icon">
-                {/* <i class="fa fa-search"></i> */}
                 <FaSearch />
               </a>
             </div>
           </div>
 
-          {companyDataList.map((companyData) => (
+          {filteredCompanyData.map((companyData) => (
             <CompanyCard
               key={companyData._id}
               companyData={companyData}
