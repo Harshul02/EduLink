@@ -13,6 +13,7 @@ const CollegeList = () => {
   const [socket, setSocket] = useState(null);
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [expanded, setExpanded] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const toggleCollapse = () => {
     setExpanded(!expanded);
@@ -43,6 +44,15 @@ const CollegeList = () => {
     );
   };
 
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  // Filtering
+  const filteredCompanyData = collegeDataList.filter((collegeData) =>
+    collegeData.collegeName.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   return (
     <div className="container" style={{ width: "80%" }}>
       <div className="row">
@@ -57,6 +67,8 @@ const CollegeList = () => {
               <input
                 type="text"
                 class="search-input"
+                value={searchInput}
+                onChange={handleSearchInputChange}
                 placeholder="Search..."
                 name=""
               />
@@ -67,7 +79,7 @@ const CollegeList = () => {
             </div>
           </div>
           
-          {collegeDataList.map((collegeData) => (
+          {filteredCompanyData.map((collegeData) => (
             <CollegeCard
               key={collegeData._id}
               collegeData={collegeData}
