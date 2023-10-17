@@ -72,7 +72,7 @@ const CheckAboutCollege = () => {
                   {collegeId && (
                     <button
                       onClick={() => navigate(-1)}
-                      className="btn btn-primary mb-3"
+                      className="btn btn-primary mb-3 rounded-2"
                       style={{ position: "absolute", top: 10, left: 10 }}
                     >
                       Back

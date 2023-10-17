@@ -4,6 +4,9 @@ import axios from "axios";
 import CollegeCard from "./CollegeCard";
 import { io } from "socket.io-client";
 import Chat from "./Chat";
+import { FaSearch } from "react-icons/fa";
+import "./search.css";
+
 
 const CollegeList = () => {
   const [collegeDataList, setCollegeDataList] = useState([]);
@@ -48,6 +51,21 @@ const CollegeList = () => {
           className="col-md-6"
           style={{ overflowY: "auto", maxHeight: "70vh" }}
         >
+
+    <div class="d-flex justify-content-center px-5 mb-4 mt-3 ">
+            <div class="search" style={{ marginRight: "100px" }}>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Search..."
+                name=""
+              />
+              <a href="#" class="search-icon">
+                {/* <i class="fa fa-search"></i> */}
+                <FaSearch />
+              </a>
+            </div>
+          </div>
           
           {collegeDataList.map((collegeData) => (
             <CollegeCard

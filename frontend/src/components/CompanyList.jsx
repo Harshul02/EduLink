@@ -3,7 +3,8 @@ import axios from "axios";
 import CompanyCard from "./CompanyCard";
 import { io } from "socket.io-client";
 import Chat from "./Chat";
-import './search.css'
+import "./search.css";
+import { FaSearch } from "react-icons/fa";
 const CompanyList = () => {
   const [companyDataList, setCompanyDataList] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -46,13 +47,21 @@ const CompanyList = () => {
           className="col-md-6"
           style={{ overflowY: "auto", maxHeight: "70vh" }}
         >
-           <div class="search">
-            <input type="text" class="search-input" placeholder="Search..." name=""/>
-            <a href="#" class="search-icon">
-              <i class="fa fa-search"></i>
-            </a>
+          <div class="d-flex justify-content-center px-5 mb-4 mt-3 ">
+            <div class="search" style={{ marginRight: "100px" }}>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Search..."
+                name=""
+              />
+              <a href="#" class="search-icon">
+                {/* <i class="fa fa-search"></i> */}
+                <FaSearch />
+              </a>
+            </div>
           </div>
-          
+
           {companyDataList.map((companyData) => (
             <CompanyCard
               key={companyData._id}
@@ -141,8 +150,6 @@ const CompanyList = () => {
                     className=" rounded-5 border-start bg-primary bg-opacity-10 bg-gradient fs-7 py-4 px-3 text-primary-emphasis "
                     style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
-                  
-
                     <div
                       className="card mb-4  rounded-5"
                       style={{ width: "50%", margin: "0 auto" }}
@@ -159,23 +166,35 @@ const CompanyList = () => {
                       </div>
                     </div>
 
-                    <p>{expanded ? selectedCompany.companyDetail.about : selectedCompany.companyDetail.about.slice(0, 250)+"..."} {selectedCompany.companyDetail.about.length > 200 && (
-            <a
-              type="button"
-              onClick={toggleCollapse}
-            >
-              {expanded ? <i class="bi bi-caret-up-fill"></i> : <i class="bi bi-caret-down-fill"></i>}
-            </a>
-          )}</p>
-          
-          {expanded && (
-            <div className="collapse" id="collapseabout">
-              {selectedCompany.companyDetail.about}
-            </div>
-          )}
+                    <p>
+                      {expanded
+                        ? selectedCompany.companyDetail.about
+                        : selectedCompany.companyDetail.about.slice(0, 250) +
+                          "..."}{" "}
+                      {selectedCompany.companyDetail.about.length > 200 && (
+                        <a type="button" onClick={toggleCollapse}>
+                          {expanded ? (
+                            <i class="bi bi-caret-up-fill"></i>
+                          ) : (
+                            <i class="bi bi-caret-down-fill"></i>
+                          )}
+                        </a>
+                      )}
+                    </p>
+
+                    {expanded && (
+                      <div className="collapse" id="collapseabout">
+                        {selectedCompany.companyDetail.about}
+                      </div>
+                    )}
                     {selectedCompany && (
-            <Chat userType="college" loggedInUserId={localStorage.getItem('collegetoken')}  userId={selectedCompany._id} socket={socket} />
-          )}
+                      <Chat
+                        userType="college"
+                        loggedInUserId={localStorage.getItem("collegetoken")}
+                        userId={selectedCompany._id}
+                        socket={socket}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
