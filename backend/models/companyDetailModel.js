@@ -34,20 +34,20 @@ const companyDetailSchema = new mongoose.Schema({
     required: true,
   },
   studentdomain: {
-    type: String,
-    default: "Details will Be available soon",
+    type: Array,
+    default: "Details will be available soon",
   },
   hiringperiod: {
     type: String,
     default: "Details will be available soon",
   },
   successstories: {
-    type: String,
-    default: "Details will be available soon",
+    type: Array,
+    default: [],
   },
   industrypartnership: {
-    type: String,
-    default: "Details will be available soon",
+    type: Array,
+    default: [],
   },
   workculture: {
     type: String,
