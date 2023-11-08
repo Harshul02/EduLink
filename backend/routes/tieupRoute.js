@@ -127,7 +127,11 @@ router.post('/request', async (req, res) => {
       const rId = req.params.rId;
   
       // Fetch tie-up status from the database
-      const tieUp = await TieUp.findOne({ senderId: userId, receiverId: rId });
+      const tieUp = await TieUp.findOne({ 
+      $or:[
+          {senderId: rId, receiverId: userId},
+          {senderId: userId, receiverId: rId} 
+        ]});
       console.log(tieUp)
       if (tieUp) {
         res.json({ success: true, accepted: tieUp.accepted });
