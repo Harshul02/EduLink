@@ -3,6 +3,7 @@ const router = express.Router();
 const TieUp = require('../models/tieupModel');
 const companymodel = require('../models/companyModel');
 const collegemodel = require('../models/collegeModel');
+const rejectionModel = require('../models/RejectionCountModel');
 
 
 router.post('/request', async (req, res) => {
