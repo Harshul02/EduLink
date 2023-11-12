@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const rejectionCountSchema = new mongoose.Schema({
-    userId: String, 
+    fromId: String,
+    toId: String, 
     rejectionCount: { type: Number, default: 0 },
 });
 

@@ -22,6 +22,8 @@
 
 
     useEffect(() => {
+
+      
       
       const fetchPendingRequests = async () => {
         try {
@@ -43,11 +45,13 @@
 
 
     
-    const handleAcceptRequest = async (requestId) => {
+    const handleAcceptRequest = async (requestId,senderid) => {
       try {
         const response = await axios.post('/api/tieup/respond', {
           requestId,
+          senderid,
           accepted: true,
+          token
         });
         console.log(requestId);
 
@@ -64,11 +68,13 @@
       }
     };
 
-    const handleRejectRequest = async (requestId) => {
+    const handleRejectRequest = async (requestId,senderid) => {
       try {
         const response = await axios.post('/api/tieup/respond', {
           requestId,
+          senderid,
           accepted: false,
+          token
         });
 
         if (response.data.success) {

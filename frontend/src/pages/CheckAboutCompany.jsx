@@ -11,21 +11,14 @@ import "./about.css";
 import { FreeMode, Scrollbar, Mousewheel } from "swiper/modules";
 const CheckAboutCompany = () => {
   const params = useParams();
-  // console.log(params);
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { companyId } = useParams();
   const [company, setCompany] = useState({});
-  const items = [
-    "We had a very great experince with some of our lcient",
-    "Company 2",
-    "Company 3",
-    "Company 4",
-  ];
   const findDetail = async () => {
     try {
-      // const token = localStorage.getItem("companytoken");
+      
       const token = params.companyId;
 
       const response = await axios.post("/api/company/getcompanydetail", {
@@ -84,6 +77,7 @@ const CheckAboutCompany = () => {
                     Back
                   </button>
           )}
+
                 <div class="card">
                   <div class="card-content">
                     <div class="card-body">

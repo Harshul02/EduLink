@@ -7,4 +7,5 @@ import Navbar from './Navbar';
 import Redirection from './Redirection';
 import CollegeAbout from './CollegeAbout';
 import CompanyList from './CompanyList';
-export { About, Tieups, CollegeList, Navbar, Redirection, CollegeAbout, CompanyList,CollegeHistory,CompanyHistory };
+import Stats from './Stats';
+export { About, Tieups, CollegeList, Navbar, Redirection, CollegeAbout, CompanyList,CollegeHistory,CompanyHistory,Stats };
