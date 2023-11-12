@@ -16,7 +16,7 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
           if (tieUpStatus === true) {
             setAcceptedStatus("Connected");
           } else if (tieUpStatus === false) {
-            setAcceptedStatus("Request Sent...");
+            setAcceptedStatus("Request Pending...");
         } 
         
        }else {
@@ -46,7 +46,7 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
 
       if (response.data.success) {
         console.log('Tie-up request sent successfully');
-        setAcceptedStatus("Request Sent...");
+        setAcceptedStatus("Request Pending...");
       } else {
         console.error('Failed to send tie-up request');
       }
@@ -67,7 +67,7 @@ const CollegeCard = ({ collegeData, loggedInUserId, handleClick }) => {
     padding: '10px 20px',
     fontSize: '16px',
     backgroundColor:
-      acceptedstatus === "Request Sent..."
+      acceptedstatus === "Request Pending..."
         ? 'yellow' 
         : acceptedstatus === "Connected"
         ? 'green' 

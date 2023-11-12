@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion as m } from 'framer-motion';
-import { CollegeAbout, Tieups,CompanyHistory, CollegeList,Navbar, CompanyList } from '../components/index';
+import { CollegeAbout, Tieups,CompanyHistory, CollegeList,Navbar, CompanyList, Stats } from '../components/index';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -92,6 +92,9 @@ const CompanyPage = () => {
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('history')}>History</Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link"  onClick={() => handleNavItemClick('statistics')}>Statistics</Link>
+          </li>
         </ul>
       </nav>
 
@@ -101,6 +104,7 @@ const CompanyPage = () => {
         {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'history' && <CompanyHistory loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'company' && <CompanyList />}
+        {selectedItem === 'statistics' && <Stats/>}
       </div>
 </>
       )}
