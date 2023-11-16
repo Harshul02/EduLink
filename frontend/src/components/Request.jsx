@@ -53,7 +53,7 @@ const Request = ({request, onAccept, onReject,token,userType}) => {
         </Link>
 
         <button
-          onClick={() => onAccept(request._id)}
+          onClick={() => onAccept(request._id,request.senderId)}
           style={{
             padding: "6px 12px",
             fontSize: "14px",
@@ -70,7 +70,7 @@ const Request = ({request, onAccept, onReject,token,userType}) => {
           <i class="bi bi-check-lg"></i>{" "}
         </button>
         <button
-          onClick={() => onReject(request._id)}
+          onClick={() => onReject(request._id,request.senderId)}
           style={{
             padding: "6px 12px",
             fontSize: "14px",

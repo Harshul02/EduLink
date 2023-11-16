@@ -11,9 +11,12 @@ import { CollegeAbout } from "./components";
 import { About } from "./components";
 import CheckAboutCompany from "./pages/CheckAboutCompany";
 import CheckAboutCollege from "./pages/CheckAboutCollege";
+import Stats from "./components/Stats";
 
 
 function App() {
+
+  const userId = localStorage.getItem("companytoken") || localStorage.getItem("collegetoken");
   return (
     <div className="App">
       <BrowserRouter>
@@ -29,6 +32,7 @@ function App() {
           <Route exact path="/companypage/:companyId/companyabout" element={<About />} />
           <Route exact path="/collegepage/:companyId/view/companyabout" element={<CheckAboutCompany />} />
           <Route exact path="/companypage/:collegeId/view/collegeabout" element={<CheckAboutCollege />} />
+          <Route exact path="/stats" element={<Stats />} />
 
 
         </Routes>

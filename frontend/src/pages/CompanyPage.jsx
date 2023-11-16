@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { About, Tieups,CollegeHistory, CollegeList, Navbar } from '../components/index';
+import { About, Tieups,CollegeHistory, CollegeList, Navbar, Stats } from '../components/index';
 import axios from 'axios';
 import CompanyDetails from '../components/CompanyDetails';
 import { Toaster } from 'react-hot-toast';
@@ -101,6 +101,9 @@ const CompanyPage = () => {
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('history')}>History</Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link"  onClick={() => handleNavItemClick('statistics')}>Statistics</Link>
+          </li>
           {/* Add more navigation items as needed */}
         </ul>
       </nav>
@@ -111,6 +114,7 @@ const CompanyPage = () => {
         {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('companytoken')} />}
         {selectedItem === 'history' && <CollegeHistory loggedInUserId={localStorage.getItem('companytoken')} />}
         {selectedItem === 'college' && <CollegeList />}
+        {selectedItem === 'statistics' && <Stats/>}
       </div>
       </>
       )}
