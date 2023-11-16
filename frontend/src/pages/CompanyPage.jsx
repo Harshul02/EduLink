@@ -10,9 +10,13 @@ const CompanyPage = () => {
   const [selectedItem, setSelectedItem] = useState('about');
   const [showModal, setShowModal] = useState(false); 
   const [company, setCompany] = useState({});
+  const [tieupsCount, setTieupsCount] = useState(0);
 
   const handleNavItemClick = (item) => {
     setSelectedItem(item);
+  };
+  const handleTieupsValue = (value) => {
+    setTieupsCount(value);
   };
 
   const findUser = async() =>{
@@ -96,7 +100,8 @@ const CompanyPage = () => {
             <Link className="nav-link"  onClick={() => handleNavItemClick('college')}>Browse Colleges</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link"  onClick={() => handleNavItemClick('tieups')}>Your Tie-Ups</Link>
+            <Link className="nav-link" onClick={() => handleNavItemClick('tieups')} style={{marginRight:"8px"}} >Your Tie-Ups {tieupsCount > 0 && <span  className="badge bg-danger">{tieupsCount}</span>}
+</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('history')}>History</Link>
@@ -111,11 +116,16 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <About />}
-        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('companytoken')} />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('companytoken')} onTieupsValue={handleTieupsValue}/>}
         {selectedItem === 'history' && <CollegeHistory loggedInUserId={localStorage.getItem('companytoken')} />}
         {selectedItem === 'college' && <CollegeList />}
         {selectedItem === 'statistics' && <Stats/>}
       </div>
+      <div style={{ display: 'none' }}><Tieups loggedInUserId={localStorage.getItem('companytoken')} onTieupsValue={handleTieupsValue}/>
+      </div>
+      
+
+
       </>
       )}
 

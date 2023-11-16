@@ -2,11 +2,12 @@
   import axios from 'axios';
   import Request from './Request';
 
-  const Tieups = ({ loggedInUserId }) => {
+  const Tieups = ({ loggedInUserId,onTieupsValue }) => {
     const [acceptedTieUps, setAcceptedTieUps] = useState([]);
     const [pendingRequests, setPendingRequests] = useState([]);
     const token = localStorage.getItem("companytoken") || localStorage.getItem("collegetoken");
     const userType = token === localStorage.getItem("companytoken") ? "company" : "college";
+
     const fetchAcceptedTieUps = async () => {
       try {
         const response = await axios.get(`/api/tieup/accepted/${loggedInUserId}`);
@@ -22,9 +23,6 @@
 
 
     useEffect(() => {
-
-      
-      
       const fetchPendingRequests = async () => {
         try {
           const response = await axios.get(`/api/tieup/pending/${loggedInUserId}`);
@@ -42,6 +40,11 @@
       fetchAcceptedTieUps();
       fetchPendingRequests();
     }, [loggedInUserId]);
+
+    useEffect(() => {
+      const count = pendingRequests.length;
+      onTieupsValue(count);
+    }, [pendingRequests, onTieupsValue]);
 
 
     

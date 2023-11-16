@@ -10,6 +10,10 @@ import CollegeDetail from '../components/CollegeDetail';
 const CompanyPage = () => {
   const [showModal, setShowModal] = useState(false); 
   const [college, setCollege] = useState({});
+  const [tieupsCount, setTieupsCount] = useState(0);
+  const handleTieupsValue = (value) => {
+    setTieupsCount(value);
+  };
 
   const findUser = async() =>{
     try{
@@ -101,11 +105,13 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <CollegeAbout/>}
-        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} onTieupsValue={handleTieupsValue}/>}
         {selectedItem === 'history' && <CompanyHistory loggedInUserId={localStorage.getItem('collegetoken')} />}
         {selectedItem === 'company' && <CompanyList />}
         {selectedItem === 'statistics' && <Stats/>}
       </div>
+      {/* <div style={{ display: 'none' }}><Tieups loggedInUserId={localStorage.getItem('companytoken')} onTieupsValue={handleTieupsValue}/>
+      </div> */}
 </>
       )}
     </div>
