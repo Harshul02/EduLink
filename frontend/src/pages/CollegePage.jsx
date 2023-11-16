@@ -11,9 +11,7 @@ const CompanyPage = () => {
   const [showModal, setShowModal] = useState(false); 
   const [college, setCollege] = useState({});
   const [tieupsCount, setTieupsCount] = useState(0);
-  const handleTieupsValue = (value) => {
-    setTieupsCount(value);
-  };
+  
 
   const findUser = async() =>{
     try{
@@ -33,8 +31,15 @@ const CompanyPage = () => {
     }
   }
 
+  const handleTieupsCountChange = () => {
+    axios.get(`/api/tieup/pending/${localStorage.getItem('collegetoken')}`)
+      .then(response => setTieupsCount(response.data.pendingRequests.length))
+      .catch(error => console.error('Error fetching pending requests count:', error));
+  };
+
   useEffect(() => {
     findUser();
+    handleTieupsCountChange();
   }, []);
 
   const [selectedItem, setSelectedItem] = useState('about');
@@ -90,8 +95,11 @@ const CompanyPage = () => {
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('company')}>Browse Companies</Link>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link"  onClick={() => handleNavItemClick('tieups')}>Your Tie-Ups</Link>
+          <li className="nav-item position-relative">
+          <Link className="nav-link" onClick={() => handleNavItemClick('tieups')} style={{ marginRight: "8px" }}>
+    Your Tie-Ups
+    <span className="badge" style={{ backgroundColor: 'red', color: 'white', padding: '1px 7px', borderRadius: '50%', position: 'absolute', top: '0px', right: '0px' }}>{tieupsCount}</span>
+  </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link"  onClick={() => handleNavItemClick('history')}>History</Link>
@@ -105,13 +113,12 @@ const CompanyPage = () => {
       {/* Display corresponding component */}
       <div style={{ marginTop: "80px" }}>
         {selectedItem === 'about' && <CollegeAbout/>}
-        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} onTieupsValue={handleTieupsValue}/>}
-        {selectedItem === 'history' && <CompanyHistory loggedInUserId={localStorage.getItem('collegetoken')} />}
+        {selectedItem === 'tieups' && <Tieups loggedInUserId={localStorage.getItem('collegetoken')} onTieupsCountChange={handleTieupsCountChange}/>}
+        {selectedItem === 'history' && <CompanyHistory loggedInUserId={localStorage.getItem('collegetoken')} onTieupsCountChange={handleTieupsCountChange} />}
         {selectedItem === 'company' && <CompanyList />}
         {selectedItem === 'statistics' && <Stats/>}
       </div>
-      {/* <div style={{ display: 'none' }}><Tieups loggedInUserId={localStorage.getItem('companytoken')} onTieupsValue={handleTieupsValue}/>
-      </div> */}
+      
 </>
       )}
     </div>
