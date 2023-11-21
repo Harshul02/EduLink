@@ -72,7 +72,12 @@ const CompanyPage = () => {
 
             {/* cover image */}
             <div style={{ height: "50vh" }}>
-              <img src="./assets/images/bg1.png" alt="Your Image" className="img-fluid " style={{ width: "100%", height: "100%" }} />
+            <img
+    src={company.avatar && company.avatar.url ? company.avatar.url : "./assets/images/bg1.png"}
+    alt="Your Image"
+    className="img-fluid"
+    style={{ width: "100%", height: "100%" }}
+  />
             </div>
 
             {/* Fixed profile box */}
