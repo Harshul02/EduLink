@@ -5,9 +5,15 @@ const bcrypt = require("bcryptjs");
 const CompanyDetails = require("../models/companyDetailModel");
 const College = require("../models/collegeModel");
 const CollegeDetail = require("../models/collegeDetailModel");
+const cloudinary = require("cloudinary");
 
 router.post("/register", async (req, res) => {
     try {
+      const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
+        folder:"avatars",
+        width:150,
+        crop:"scale",
+      })
       const companyExists = await Company.findOne({ email: req.body.email });
       if (companyExists) {
         return res.status(200).json({
@@ -19,7 +25,12 @@ router.post("/register", async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
       req.body.password = hashedPassword;
-      const newCompany = new Company(req.body);
+      const newCompany = new Company({...req.body,
+        avatar: {
+          public_id: mycloud.public_id,
+          url: mycloud.secure_url,
+        },
+      });
       await newCompany.save();
       res.status(200).json({
         message: "Registration successful",

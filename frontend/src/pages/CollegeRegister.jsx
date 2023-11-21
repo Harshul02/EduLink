@@ -16,12 +16,31 @@ const CollegeRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [avatar , setAvatar] = useState("");
   const navigate = useNavigate();
+
+  const registerDataChange = (e)=>{
+
+    if(e.target.name === "avatar"){
+        const reader = new FileReader();
+        reader.onload = ()=>{
+            if(reader.readyState === 2){
+                setAvatar(reader.result);
+            }
+        }
+        reader.readAsDataURL(e.target.files[0]);
+
+    }
+    else{
+        setAvatar(e.target.value);
+    }
+
+  }
 
   const registerHandler = async(e) => {
     e.preventDefault();
     try {
-      const values = {collegeName, collegeType, contactPerson, email, password, phone};
+      const values = {collegeName, collegeType, contactPerson, email, password, phone , avatar};
       const response = await axios.post("/api/college/register", values);
       if (response.data.success) {
         toast.success(response.data.message);
@@ -34,12 +53,7 @@ const CollegeRegister = () => {
     }
 };
 
-// useEffect(() => {
- 
-//   if (isAuthenticated) {
-//     navigate("/");
-//   }
-// }, [isAuthenticated, navigate]);
+
  
   return (
     <>
@@ -153,6 +167,17 @@ const CollegeRegister = () => {
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group mb-4">
+                <img src ="./assets/images/bg1.png"alt = 'avatarPreview'/>
+                  <input
+                    type="file"
+                    className="form-control form-control-lg"
+                    name = "avatar"
+                    accept = "image/*"
+                    onChange={registerDataChange}
                   />
                 </div>
 

@@ -29,6 +29,18 @@ const collegeSchema = new mongoose.Schema({
     type: Boolean,  
     default: true,  
   },
+  avatar:
+        {
+        public_id:{
+            type:String,
+            required:true
+        },
+        url:{
+            type:String,
+            required:true
+        },
+      },
+
 });
 
 module.exports = mongoose.model("colleges", collegeSchema);
