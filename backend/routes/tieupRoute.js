@@ -188,6 +188,24 @@ router.get('/statuscheck/:userId/:rId', async (req, res) => {
   }
 });
 
+router.post('/reject/:tieUpId', async (req, res) => {
+  try {
+    const { tieUpId } = req.params;
+
+  
+    const deletedTieup = await TieUp.findByIdAndDelete(tieUpId);
+
+    if (!deletedTieup) {
+      return res.status(404).json({ success: false, message: 'Tie-up request not found.' });
+    }
+
+    res.status(200).json({ success: true, message: 'Tie-up request rejected successfully.' });
+  } catch (error) {
+    console.error('Error rejecting tie-up request:', error);
+    res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
+
   
   
   async function getEntityName(entityId) {

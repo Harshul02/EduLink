@@ -9,20 +9,32 @@ const Token = require("../models/token.js");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
 
-router.post("/register", async (req, res) => {
-  try {
-    const companyExists = await Company.findOne({ email: req.body.email });
-    if (companyExists) {
-      return res.status(200).json({
-        message: "Company already exists",
-        success: false,
-      });
-    }
 
+
+router.post("/register", async (req, res) => {
+    try {
+      const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
+        folder:"avatars",
+        width:150,
+        crop:"scale",
+      })
+      const companyExists = await Company.findOne({ email: req.body.email });
+      if (companyExists) {
+        const cloudinary = require("cloudinary");
+        return res.status(200).json({
+          message: "Company already exists",
+          success: false,
+        });
+      }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
-    const newCompany = new Company(req.body);
+    const newCompany = new Company({...req.body,
+      avatar: {
+        public_id: mycloud.public_id,
+        url: mycloud.secure_url,
+      },
+    });
     await newCompany.save();
     const token = await new Token({
       userId: newCompany._id,

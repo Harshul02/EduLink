@@ -7,11 +7,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-
-// import { useSelector } from 'react-redux';
-// import { registerCompany } from '../Actions/User';
 const CompanyRegister = () => {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [companyName, setCompanyName] = useState("");
   const [companyType, setCompanyType] = useState("");
@@ -21,11 +17,30 @@ const CompanyRegister = () => {
   const [phone, setPhone] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
 
+  const [avatar , setAvatar] = useState("");
+
+  const registerDataChange = (e)=>{
+
+    if(e.target.name === "avatar"){
+        const reader = new FileReader();
+        reader.onload = ()=>{
+            if(reader.readyState === 2){
+                setAvatar(reader.result);
+            }
+        }
+        reader.readAsDataURL(e.target.files[0]);
+
+    }
+    else{
+        setAvatar(e.target.value);
+    }
+
+  }
 
   const companyregisterHandler = async(e) => {
     e.preventDefault();
     try {
-      const values = {companyName, companyType, contactPerson, email, password, phone};
+      const values = {companyName, companyType, contactPerson, email, password, phone,avatar};
       const response = await axios.post("/api/company/register", values);
       if (response.data.success) {
         toast.success(response.data.message);
@@ -158,6 +173,17 @@ const CompanyRegister = () => {
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
+                <div className="form-group mb-4">
+                <img src ="./assets/images/bg1.png"alt = 'avatarPreview'/>
+                  <input
+                    type="file"
+                    className="form-control form-control-lg"
+                    name = "avatar"
+                    accept = "image/*"
+                    onChange={registerDataChange}
+                  />
+                </div>
+
 
                 <button
                   type="submit"
