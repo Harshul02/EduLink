@@ -7,5 +7,4 @@ const tieUpSchema = new mongoose.Schema({
     accepted: { type: Boolean, default: false }, // Status of acceptance
   });
   
-
 module.exports = mongoose.model("TieUp", tieUpSchema);

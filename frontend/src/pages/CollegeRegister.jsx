@@ -16,6 +16,8 @@ const CollegeRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [verificationSent, setVerificationSent] = useState(false);
+
   const navigate = useNavigate();
 
   const registerHandler = async(e) => {
@@ -25,7 +27,9 @@ const CollegeRegister = () => {
       const response = await axios.post("/api/college/register", values);
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/collegelogin");
+        setVerificationSent(true);
+
+        // navigate("/collegelogin");
       } else {
         toast.error(response.data.message);
       }
@@ -130,6 +134,12 @@ const CollegeRegister = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
+                {verificationSent && (
+                    <div className="alert alert-success mt-3" role="alert">
+                      Verification email has been sent to your email address. Please check your inbox.
+                    </div>
+                  )}
+
                 <div className="form-group mb-4">
               <input
                 type="password"

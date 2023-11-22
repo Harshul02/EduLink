@@ -5,6 +5,10 @@ const bcrypt = require("bcryptjs");
 const CollegeDetails = require("../models/collegeDetailModel");
 const Company = require("../models/companyModel");
 const CompanyDetail = require("../models/companyDetailModel");
+const Token = require("../models/token.js");
+const sendEmail = require("../utils/sendEmail.js");
+const crypto = require("crypto");
+
 
 router.post("/register", async (req, res) => {
   try {
@@ -21,10 +25,26 @@ router.post("/register", async (req, res) => {
     req.body.password = hashedPassword;
     const newCollege = new College(req.body);
     await newCollege.save();
-    res.status(200).json({
-      message: "Registration successful",
+
+    const token = await new Token({
+      userId : newCollege._id,
+      token : crypto.randomBytes(32).toString("hex")
+
+    }).save();
+
+    const url = `${process.env.BASE_URL}/collegeregister/${newCollege._id}/verify/${token.token}`;
+    // const url = `${process.env.BASE_URL}collegeregister/`;
+
+		await sendEmail(newCollege.email, "Verify Email", url);
+
+    
+    res.status(201).json({
+      message: "Verification Email sent",
       success: true
     });
+
+
+
 
   } catch (error) {
     console.log(error);
@@ -46,6 +66,15 @@ router.post("/login", async (req, res) => {
         success: false,
       });
     }
+
+        // Check if the clg is verified
+        if (!college.verified) {
+          return res.status(200).send({
+            message: "Email not verified. Please verify your email first.",
+            success: false,
+          });
+        }
+
     const isMatch = await bcrypt.compare(req.body.password, college.password);
     if (!isMatch) {
       return res.status(200).send({
@@ -54,7 +83,7 @@ router.post("/login", async (req, res) => {
       });
     }
     
-    res.status(200).send({
+    return res.status(200).send({
       message: "Login successful",
       success: true,
       data: college._id,
@@ -208,5 +237,29 @@ router.post('/updatedetails', async (req, res) => {
   }
 });
 
+router.get('/:id/verify/:token', async (req, res) => {
+	try {
+		const user = await College.findOne({ _id: req.params.id });
+		if (!user) return res.status(400).send({ message: "Invalid link" });
+    console.log("lol");
+    console.log(user);
+    console.log("User ID:", user._id);
+		const token = await Token.findOne({
+			userId: user._id,
+			token: req.params.token,
+		});
+		if (!token) return res.status(400).send({ message: "Invalid link" });
+console.log("hap");
+		// await College.updateOne({ _id: user._id, verified: true });
+    await College.updateOne({ _id: user._id }, { $set: { verified: true } });
+		// await token.remove();
+    await Token.deleteOne({ userId: user._id, token: req.params.token });
+    console.log("Confirm");
 
+		return res.status(200).send({ message: "Email verified successfully" });
+	} catch (error) {
+    console.error("Error:", error);
+		return res.status(500).send({ message: "Intern Server Error" });
+	}
+});
   module.exports = router;
