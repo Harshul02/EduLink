@@ -29,6 +29,21 @@ const companySchema = new mongoose.Schema({
     type: Boolean,  
     default: true,  
   },
+  verified:{
+    type: Boolean,
+    default : false,
+  },
+  avatar:
+        {
+        public_id:{
+            type:String,
+            required:true
+        },
+        url:{
+            type:String,
+            required:true
+        },
+      },
 });
 
 module.exports = mongoose.model("companies", companySchema);

@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config();
 const dbConfig = require('./config/db');
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+const fileUpload = require("express-fileupload")
+app.use(fileUpload({
+    limits: { fileSize: 10 * 1024 * 1024 },
+  }));
 const PORT = process.env.PORT || 5000;
 const http = require('http');
 const server = http.createServer(app);
@@ -15,11 +19,27 @@ const collegeRoute = require('./routes/collegeRoute');
 const companyRoute = require('./routes/companyRoute');
 const chatRoute = require('./routes/chatRoute');
 const tieupRoute = require('./routes/tieupRoute');
-const ChatMessage = require('./models/ChatMessageModel'); // Import your ChatMessage model
+const ChatMessage = require('./models/ChatMessageModel');
+const cloudinary = require("cloudinary");
+
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET,
+
+})
+
+
+
+
+
+
+
 app.use('/api/college', collegeRoute);
 app.use('/api/company', companyRoute);
 app.use('/api/chat', chatRoute);
 app.use('/api/tieup', tieupRoute);
+
 
 
 const userSockets = {}; // To store active sockets for each user

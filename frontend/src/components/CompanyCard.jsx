@@ -17,7 +17,7 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
           if (tieUpStatus === true) {
             setAcceptedcompany("Connected");
           } else if (tieUpStatus === false) {
-            setAcceptedcompany("Request Sent...");
+            setAcceptedcompany("Request Pending...");
         } 
         
        }else {
@@ -47,7 +47,7 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
           });
     
           if (response.data.success) {
-            setAcceptedcompany("Request Sent...")
+            setAcceptedcompany("Request Pending...")
             console.log('Tie-up request sent successfully');
           } else {
             console.error('Failed to send tie-up request');
@@ -67,7 +67,7 @@ const CompanyCard = ({ companyData,loggedInUserId,handleClick }) => {
     padding: '10px 20px',
     fontSize: '16px',
     backgroundColor:
-    acceptedstatuscompany === "Request Sent..."
+    acceptedstatuscompany === "Request Pending..."
         ? 'yellow' 
         : acceptedstatuscompany === "Connected"
         ? 'green' 

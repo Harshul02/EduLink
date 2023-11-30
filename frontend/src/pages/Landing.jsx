@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import {motion as m} from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ContactUs from "./ContactUs";
+import Lottie from "react-lottie";
+import animationdata from "../animations/about2.json";
 
 
 const Landing = () => {
@@ -180,8 +182,17 @@ const Landing = () => {
               </div>
             </div>
             <div className="row justify-content-between align-items-center">
-              <div className="col-lg-6" data-aos="fade-down" data-aos-delay="50">
-                <img src="./assets/images/bg1.png" alt="" />
+              <div className="col-lg-7 justify-content-between align-items-center" data-aos="fade-down" data-aos-delay="50">
+                {/* <img src="./assets/images/bg1.png" alt="" /> */}
+                <Lottie
+        options={{
+          loop: true,
+          autoplay: true,
+          animationData: animationdata,
+        }}
+        height={600} // Adjust the height as needed
+        width={600} // Adjust the width as needed
+      />
               </div>
               <div data-aos="fade-down" data-aos-delay="150" className="col-lg-5">
                 <h1>About Edulink</h1>

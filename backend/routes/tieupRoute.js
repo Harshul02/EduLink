@@ -3,6 +3,7 @@ const router = express.Router();
 const TieUp = require('../models/tieupModel');
 const companymodel = require('../models/companyModel');
 const collegemodel = require('../models/collegeModel');
+const rejectionModel = require('../models/RejectionCountModel');
 
 
 router.post('/request', async (req, res) => {
@@ -43,13 +44,30 @@ router.post('/request', async (req, res) => {
   
   
    router.post('/respond', async (req, res) => {
-    const { requestId, accepted } = req.body;
+    const { requestId,senderid, accepted , token } = req.body;
+    console.log(token);
   
     try {
       let updatedtieup;
       if (accepted === false) {
         await TieUp.findByIdAndDelete(requestId);
+        const rejectionCountEntry = await rejectionModel.findOne({ fromId: senderid , toId: token });
+
+            if (rejectionCountEntry) {
+                rejectionCountEntry.rejectionCount += 1;
+                await rejectionCountEntry.save();
+            } else {
+               const newrejectionmodel = new rejectionModel({ fromId: senderid, toId:token, rejectionCount: 1 });
+               await newrejectionmodel.save();
+            }
       } else {
+        const temprejectionCountEntry = await rejectionModel.findOne({ fromId: senderid , toId: token });
+        console.log(temprejectionCountEntry);
+        if (temprejectionCountEntry) {
+          temprejectionCountEntry.rejectionCount = 0;
+          await temprejectionCountEntry.save();
+      }
+
         updatedtieup = await TieUp.findByIdAndUpdate(requestId, { accepted });
       }
   
@@ -74,6 +92,8 @@ router.post('/request', async (req, res) => {
         ],
       }).exec();
 
+      const userpendingTieUps = await TieUp.find({ senderId: userId, accepted: false });
+
       const NamesOfRequestSender = [];
       for (const sender of pendingRequests) {
         const senderName = await getEntityName(sender.senderId);
@@ -82,9 +102,11 @@ router.post('/request', async (req, res) => {
 
       console.log(NamesOfRequestSender);
 
+      const userPendingTieUpsSize = userpendingTieUps.length || 0;
+
 
   
-      res.json({ success: true, pendingRequests: NamesOfRequestSender });
+      res.json({ success: true, pendingRequests: NamesOfRequestSender, userPendingTieUpsSize });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, error: 'Failed to fetch pending requests' });
@@ -101,44 +123,89 @@ router.post('/request', async (req, res) => {
           { receiverId: userId, accepted: true },
         ],
       });
-  
+
+      const useracceptedTieUps = await TieUp.find({ senderId: userId, accepted: true });
       
       const populatedTieUps = [];
-  
+
       for (const tieUp of acceptedTieUps) {
         const senderName = await getEntityName(tieUp.senderId);
         const receiverName = await getEntityName(tieUp.receiverId);
         populatedTieUps.push({ ...tieUp.toObject(), senderName, receiverName });
       }
-  
+
       console.log(populatedTieUps);
-  
-      res.json({ success: true, acceptedTieUps: populatedTieUps });
+      
+      const userAcceptedTieUpsSize = useracceptedTieUps.length || 0;
+
+      res.json({ success: true, acceptedTieUps: populatedTieUps, userAcceptedTieUpsSize });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, error: 'Failed to fetch accepted tie-ups' });
     }
-  });
+});
+
+  router.get('/getRejectionCount/:userId', async (req, res) => {
+    const userId = req.params.userId;
   
-  
-  router.get('/statuscheck/:userId/:rId', async (req, res) => {
     try {
-      const userId = req.params.userId;
-      const rId = req.params.rId;
+      const rejectionCounts = await rejectionModel.find({ fromId: userId });
+      
+      const totalRejectionCount = rejectionCounts.reduce((sum, entry) => sum + entry.rejectionCount, 0);
+
+      const finalRejectionCount = rejectionCounts.length > 0 ? totalRejectionCount : 0;
+      console.log(finalRejectionCount);
   
-      // Fetch tie-up status from the database
-      const tieUp = await TieUp.findOne({ senderId: userId, receiverId: rId });
-      console.log(tieUp)
-      if (tieUp) {
-        res.json({ success: true, accepted: tieUp.accepted });
-      } else {
-        res.json({ success: false, message: 'Tie-up not found' });
-      }
+      res.json({
+        success: true,
+        finalRejectionCount
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, error: 'Internal server error' });
+      res.status(500).json({ success: false, error: 'Failed to retrieve rejection count' });
     }
-  });
+});
+
+
+router.get('/statuscheck/:userId/:rId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const rId = req.params.rId;
+    const tieUp = await TieUp.findOne({ 
+    $or:[
+        {senderId: rId, receiverId: userId},
+        {senderId: userId, receiverId: rId} 
+      ]});
+    console.log(tieUp)
+    if (tieUp) {
+      res.json({ success: true, accepted: tieUp.accepted });
+    } else {
+      res.json({ success: false, message: 'Tie-up not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
+router.post('/reject/:tieUpId', async (req, res) => {
+  try {
+    const { tieUpId } = req.params;
+
+  
+    const deletedTieup = await TieUp.findByIdAndDelete(tieUpId);
+
+    if (!deletedTieup) {
+      return res.status(404).json({ success: false, message: 'Tie-up request not found.' });
+    }
+
+    res.status(200).json({ success: true, message: 'Tie-up request rejected successfully.' });
+  } catch (error) {
+    console.error('Error rejecting tie-up request:', error);
+    res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
+
   
   
   async function getEntityName(entityId) {

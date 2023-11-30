@@ -66,6 +66,6 @@ To get started with EduLink, follow these steps:
 
 ## Contributing
 
-We welcome contributions from the open-source community to enhance and improve EduLink. If you'd like to contribute, please follow our [Contribution Guidelines](CONTRIBUTING.md).
+We welcome contributions from the open-source community to enhance and improve EduLink.
 
 

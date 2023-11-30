@@ -191,7 +191,7 @@ const CollegeAbout = () => {
             <div className="form-group my-3 d-flex justify-content-end">
             <button
   type="button"
-  className="btn btn-primary"
+  className="btn btn-primary rounded-2"
   onClick={handleOpenModal}
 >
   <FontAwesomeIcon icon={faEdit} />
