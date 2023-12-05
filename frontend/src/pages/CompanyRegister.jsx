@@ -2,13 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {motion as m} from "framer-motion";
 import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 const CompanyRegister = () => {
-  const navigate = useNavigate();
   const [companyName, setCompanyName] = useState("");
   const [companyType, setCompanyType] = useState("");
   const [contactPerson, setContactPerson] = useState("");
@@ -45,7 +42,6 @@ const CompanyRegister = () => {
       if (response.data.success) {
         toast.success(response.data.message);
         setVerificationSent(true);
-        // navigate("/companylogin");
       } else {
         toast.error(response.data.message);
       }
@@ -189,8 +185,8 @@ const CompanyRegister = () => {
                   type="submit"
                   className="btn btn-primary btn-lg btn-block"
                   style={{
-                    backgroundColor: '#007bff', /* Change button background color */
-                    borderColor: '#007bff', /* Change button border color */
+                    backgroundColor: '#007bff', 
+                    borderColor: '#007bff', 
                   }}
                 >
                   Sign Up

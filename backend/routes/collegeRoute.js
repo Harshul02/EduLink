@@ -14,12 +14,24 @@ const cloudinary = require("cloudinary");
 router.post("/register", async (req, res) => {
   try {
 
-    const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
-      folder:"avatars",
-      width:150,
-      crop:"scale",
-
-  })
+   let avatarData = {};
+   if (req.body.avatar) {
+    const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+    avatarData = {
+      public_id: mycloud.public_id,
+      url: mycloud.secure_url,
+    };
+  } else {
+    avatarData = {
+      public_id: "avatars/zmveajugsfg2btb48jmn",
+      url: "https://res.cloudinary.com/de6p7x2tv/image/upload/v1701763716/avatars/zmveajugsfg2btb48jmn.png",
+    };
+  }
+   
   
     const collegeExists = await College.findOne({ email: req.body.email });
     if (collegeExists) {
@@ -36,10 +48,7 @@ router.post("/register", async (req, res) => {
     req.body.password = hashedPassword;
     const newCollege = new College({
       ...req.body,
-      avatar: {
-        public_id: mycloud.public_id,
-        url: mycloud.secure_url,
-      },
+      avatar: avatarData
     });
     await newCollege.save();
 
