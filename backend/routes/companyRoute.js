@@ -8,34 +8,54 @@ const CollegeDetail = require("../models/collegeDetailModel");
 const Token = require("../models/token.js");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary");
 
 
 
 router.post("/register", async (req, res) => {
-    try {
-      const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
-        folder:"avatars",
-        width:150,
-        crop:"scale",
-      })
-      const companyExists = await Company.findOne({ email: req.body.email });
-      if (companyExists) {
-        const cloudinary = require("cloudinary");
-        return res.status(200).json({
-          message: "Company already exists",
-          success: false,
-        });
-      }
+  try {
+    let avatarData = {};
+
+    if (req.body.avatar) {
+      // If user provides an avatar, upload it to Cloudinary
+      const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+
+      // Set avatarData with Cloudinary information
+      avatarData = {
+        public_id: mycloud.public_id,
+        url: mycloud.secure_url,
+      };
+    } else {
+      // If user doesn't provide an avatar, set default values
+      avatarData = {
+        public_id: "avatars/zmveajugsfg2btb48jmn",
+        url: "https://res.cloudinary.com/de6p7x2tv/image/upload/v1701763716/avatars/zmveajugsfg2btb48jmn.png", // Set your default image path here
+      };
+    }
+
+    const companyExists = await Company.findOne({ email: req.body.email });
+    if (companyExists) {
+      return res.status(200).json({
+        message: "Company already exists",
+        success: false,
+      });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
-    const newCompany = new Company({...req.body,
-      avatar: {
-        public_id: mycloud.public_id,
-        url: mycloud.secure_url,
-      },
+
+    const newCompany = new Company({
+      ...req.body,
+      avatar: avatarData,
     });
+
     await newCompany.save();
+
     const token = await new Token({
       userId: newCompany._id,
       token: crypto.randomBytes(32).toString("hex"),
@@ -53,10 +73,11 @@ router.post("/register", async (req, res) => {
     console.log(error);
     res.status(500).send({
       message: error.message,
-      succes: false,
+      success: false,
     });
   }
 });
+
 
 router.post("/login", async (req, res) => {
   try {

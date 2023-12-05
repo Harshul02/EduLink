@@ -47,7 +47,7 @@ io.on('connection', async (socket) => {
     console.log('A user connected');
 
     socket.on('setUser', async (userId) => {
-        userSockets[userId] = socket; // Store the user's socket
+        userSockets[userId] = socket; 
 
         // Fetch the chat history for the user from the database
         try {
@@ -84,7 +84,6 @@ io.on('connection', async (socket) => {
 
     socket.on('disconnect', () => {
         console.log('A user disconnected');
-        // Clean up the user's socket from userSockets object
         for (const userId in userSockets) {
             if (userSockets[userId] === socket) {
                 delete userSockets[userId];
