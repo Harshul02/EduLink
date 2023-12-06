@@ -13,8 +13,6 @@ const PORT = process.env.PORT || 5000;
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-
-// Import necessary routes and models
 const collegeRoute = require('./routes/collegeRoute');
 const companyRoute = require('./routes/companyRoute');
 const chatRoute = require('./routes/chatRoute');
