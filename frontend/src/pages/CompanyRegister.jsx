@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import Loader from '../Loader/Loader';
 const CompanyRegister = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyType, setCompanyType] = useState("");
@@ -13,6 +14,7 @@ const CompanyRegister = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [avatar , setAvatar] = useState("");
 
@@ -37,21 +39,28 @@ const CompanyRegister = () => {
   const companyregisterHandler = async(e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const values = {companyName, companyType, contactPerson, email, password, phone,avatar};
       const response = await axios.post("/api/company/register", values);
       if (response.data.success) {
         toast.success(response.data.message);
         setVerificationSent(true);
+        setLoading(true);
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       toast.error(error.message);
     }
+    finally{
+      setLoading(false);
+    }
     
  };
  
   return (
+    
+    
     <>
     <Toaster />
     <m.div className="bg-light" initial={{ x: -60, opacity: 0 }}
@@ -170,7 +179,9 @@ const CompanyRegister = () => {
                   />
                 </div>
                 <div className="form-group mb-4">
-                <img src ="./assets/images/bg1.png"alt = 'avatarPreview'/>
+                <img src ="./assets/images/bg1.png"alt = 'avatarPreview'
+                style={{ width: '450px', height: '150px', position: 'relative', marginBottom: '20px' }}
+                />
                   <input
                     type="file"
                     className="form-control form-control-lg"
@@ -180,18 +191,32 @@ const CompanyRegister = () => {
                   />
                 </div>
 
+                {loading ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Loader />
+                    </div>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg btn-block"
+                      style={{
+                        backgroundColor: '#007bff',
+                        borderColor: '#007bff',
+                      }}
+                    >
+                      Sign Up
+                    </button>
+                  )}
 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{
-                    backgroundColor: '#007bff', 
-                    borderColor: '#007bff', 
-                  }}
-                >
-                  Sign Up
-                </button>
-
+                
+                
+                
                 <p className="mt-4">
                   Already have an account?{' '}
                   <Link to="/companylogin" className="text-primary">
@@ -205,6 +230,7 @@ const CompanyRegister = () => {
       </section>
     </m.div>
     </>
+    
   );
 };
 
