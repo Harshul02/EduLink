@@ -5,12 +5,9 @@ import Redirection from '../components/Redirection';
 import {motion as m} from "framer-motion";
 import { useState } from 'react';
 import { useEffect } from 'react';
-// import {useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-// import { useSelector } from 'react-redux';
-// import { loginCompany } from '../Actions/User';
 
 const CompanyLogin = () => {
   const navigate = useNavigate();
@@ -24,22 +21,7 @@ const CompanyLogin = () => {
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const dispatch = useDispatch();
-  
-  // const { companyisAuthenticated } = useSelector((state) => state.company);
-//   const companyloginHandler = async(e) => {
-//   e.preventDefault();
-//   await dispatch(loginCompany(email,password));
-  
-// }
-// useEffect(() => {
- 
-//   if (companyisAuthenticated) {
-//     navigate("/");
-//   }
-// }, [companyisAuthenticated, navigate]);
-  
-const companyloginHandler = async(e) => {
+  const companyloginHandler = async(e) => {
   e.preventDefault();
   try {
     const values = {email, password};
@@ -119,7 +101,7 @@ const companyloginHandler = async(e) => {
 
                   <div className="d-flex justify-content-between align-items-center mb-4">
                     <div></div>
-                    <Link to="#!" className="text-primary">Forgot password?</Link>
+                    <Link to="/companyreset" className="text-primary">Forgot password?</Link>
                   </div>
                   <Redirection   type={"college"} />
 

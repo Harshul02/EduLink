@@ -59,7 +59,8 @@ router.post("/register", async (req, res) => {
     const token = await new Token({
       userId: newCompany._id,
       token: crypto.randomBytes(32).toString("hex"),
-    }).save();
+    })
+    await token.save();
 
     const url = `${process.env.BASE_URL}/companyregister/${newCompany._id}/verify/${token.token}`;
 
@@ -265,17 +266,73 @@ router.get("/:id/verify/:token", async (req, res) => {
       userId: user._id,
       token: req.params.token,
     });
-    if (!token) return res.status(400).send({ message: "Invalid link" });
-    console.log("hap");
-    // await College.updateOne({ _id: user._id, verified: true });
+    if (!token) return res.status(400).send({ message: "Invalid link" })
     await Company.updateOne({ _id: user._id }, { $set: { verified: true } });
-    // await token.remove();
-    await Token.deleteOne({ userId: user._id, token: req.params.token });
-    console.log("Confirm");
-
     return res.status(200).send({ message: "Email verified successfully" });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).send({ message: "Intern Server Error" });
   }
 });
+
+router.post('/verify-email', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const company = await Company.findOne({ email: email });
+
+    if (!company) {
+      return res.status(404).send({ message: "College not found" });
+    }
+
+    const companyId = company._id;
+
+    if (!companyId) {
+      return res.status(404).send({ message: "College ID not found" });
+    }
+
+    const existingToken = await Token.findOne({ userId: companyId });
+
+    if (!existingToken) {
+      return res.status(404).send({ message: "Token not found for the college" });
+    }
+
+    const token = existingToken.token;
+    const verificationURL = `${process.env.BASE_URL}/companyreset/${companyId}/verify/${token}`;
+    
+    await sendEmail(company.email, "Verify Email", verificationURL);
+
+    return res.status(200).send({ message: "Email verification sent successfully" });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+router.post('/reset-password/:id', async (req, res) => {
+
+  try {
+    const { newpassword } = req.body;
+    const companyId = req.params.id;
+
+    const company = await Company.findOne({ _id: companyId });
+
+    if (!company) {
+      return res.status(404).send({ message: "Company not found" });
+    }
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newpassword, salt);
+
+    await Company.updateOne({ _id: companyId }, { $set: { password: hashedPassword } });
+
+
+    return res.status(200).send({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+
+
+
+
+})
