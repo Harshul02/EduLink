@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Redirection from '../components/Redirection';
 import {motion as m} from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import Loader from '../Loader/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
@@ -17,9 +15,9 @@ const CollegeRegister = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [avatar , setAvatar] = useState("");
-  const navigate = useNavigate();
 
   const registerDataChange = (e)=>{
 
@@ -42,18 +40,20 @@ const CollegeRegister = () => {
   const registerHandler = async(e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const values = {collegeName, collegeType, contactPerson, email, password, phone , avatar};
       const response = await axios.post("/api/college/register", values);
       if (response.data.success) {
         toast.success(response.data.message);
         setVerificationSent(true);
-
-        // navigate("/collegelogin");
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       toast.error(error.message);
+    }
+    finally{
+      setLoading(false);
     }
 };
 
@@ -181,7 +181,10 @@ const CollegeRegister = () => {
                 </div>
 
                 <div className="form-group mb-4">
-                <img src ="./assets/images/bg1.png"alt = 'avatarPreview'/>
+                <img src ="./assets/images/bg1.png"
+                alt = 'avatarPreview'
+                style={{ width: '450px', height: '150px', position: 'relative', marginBottom: '20px' }}
+                />
                   <input
                     type="file"
                     className="form-control form-control-lg"
@@ -193,17 +196,28 @@ const CollegeRegister = () => {
 
               
 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{
-                    backgroundColor: '#007bff', /* Change button background color */
-                    borderColor: '#007bff', /* Change button border color */
-                  }}
-                >
-                  Sign Up
-                </button>
-
+                {loading ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Loader />
+                    </div>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg btn-block"
+                      style={{
+                        backgroundColor: '#007bff',
+                        borderColor: '#007bff',
+                      }}
+                    >
+                      Sign Up
+                    </button>
+                  )}
                 <p className="mt-4">
                   Already have an account?{' '}
                   <Link to="/collegelogin" className="text-primary">

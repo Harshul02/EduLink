@@ -8,20 +8,26 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import Loader from '../Loader/Loader';
 
 const CompanyEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const handleVerification = async (e) => {
     e.preventDefault();
   
     try {
+      setLoading(true);
       const response = await axios.post('/api/company/verify-email', { email });
       console.log(response.data); 
       toast.success(response.data.message);
     } catch (error) {
       console.error('Error:', error.response.data.message);
       toast.error(`Error: ${error.response.data.message}`);
+    }
+    finally{
+      setLoading(false);
     }
   };
 return (
@@ -78,16 +84,28 @@ return (
                 </div>
 
 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{
-                    backgroundColor: '#007bff',
-                    borderColor: '#007bff',
-                  }}
-                >
-                  Send Link
-                </button>
+                {loading ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Loader />
+                    </div>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg btn-block"
+                      style={{
+                        backgroundColor: '#007bff',
+                        borderColor: '#007bff',
+                      }}
+                    >
+                      Send Verification Link
+                    </button>
+                  )}
 
               </form>
             </div>
