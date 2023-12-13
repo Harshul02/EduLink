@@ -90,11 +90,11 @@ const CompanyRegister = () => {
                 <h2
                   className="mb-4"
                   style={{
-                    fontSize: '2.5rem', /* Increase font size */
-                    fontWeight: 'bold', /* Add font weight */
-                    color: '#007bff', /* Change heading color */
-                    borderBottom: '2px solid #007bff', /* Add underline effect */
-                    paddingBottom: '0.5rem', /* Add some spacing at the bottom */
+                    fontSize: '2.5rem', 
+                    fontWeight: 'bold', 
+                    color: '#007bff', 
+                    borderBottom: '2px solid #007bff', 
+                    paddingBottom: '0.5rem',
                   }}
                 >
                   Company Registration

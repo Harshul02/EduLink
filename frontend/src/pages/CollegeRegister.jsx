@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {motion as m} from "framer-motion";
 import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import toast, { Toaster } from 'react-hot-toast';
@@ -55,6 +57,10 @@ const CollegeRegister = () => {
     finally{
       setLoading(false);
     }
+};
+
+const handleChange = (value) => {
+  setPhone(value);
 };
 
 
@@ -168,18 +174,22 @@ const CollegeRegister = () => {
 
             
 
-                <div className="form-group mb-4">
-                  <input
-                    type="text"
-                    id="phone"
-                    className="form-control form-control-lg"
-                    placeholder="Phone Number"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
+            <div className="form-group mb-4">
+            <PhoneInput
+            id="phone"
+            country={'in'}
+             placeholder="Phone Number"
+             required
+             value={phone}
+             onChange={handleChange}
+             inputProps={{
+              required: true,
+              style: { width: '100%' }
+              }}
+             />
 
+                  
+              </div>    
                 <div className="form-group mb-4">
                 <img src ="./assets/images/bg1.png"
                 alt = 'avatarPreview'
