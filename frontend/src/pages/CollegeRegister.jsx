@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {motion as m} from "framer-motion";
-import { useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useState } from 'react';
@@ -16,6 +15,7 @@ const CollegeRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [passwordPattern, setPasswordPattern] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -62,6 +62,21 @@ const CollegeRegister = () => {
 const handleChange = (value) => {
   setPhone(value);
 };
+// const validatePassword = (password) => {
+//   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+//   return passwordRegex.test(password);
+// };
+// const passwordMatch = (value)=>{
+//   setPassword(value);
+//   if (!validatePassword(value)) {
+//     setPasswordPattern(false);
+//   }
+//   else{
+//     setPasswordPattern(true);
+//   }
+
+
+// }
 
 
  
@@ -168,8 +183,44 @@ const handleChange = (value) => {
                 placeholder="Create Password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={
+                  (e)=>{setPassword(e.target.value)
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+                    const p =  passwordRegex.test(password);
+                    if (!p) {
+                      setPasswordPattern(false);
+                    }
+                    else{
+                      setPasswordPattern(true);
+                    }
+                  }
+                 
+
+                
+                }
+
               />
+                  {!passwordPattern  || password==='' ?  <div className="alert alert-danger mt-3" role="alert">
+                     password not matching with pattern.
+                    </div>:
+                    <div className="alert alert-success mt-3" role="alert">
+                      password matched   with pattern. 
+
+                    </div>
+
+              }    
+
+              <div style={{textAlign:'center', marginTop: '8px', color: '#007bff', fontWeight: 'bold' }}>
+              <ul style={{ listStyleType: 'none', display:'inline-block' , textAlign:'left' }}>
+              <li>&#8226; At least 8 characters long</li>
+              <li>&#8226; Include at least one uppercase letter</li>
+              <li>&#8226; Include at least one special character (e.g., !, @, #, $)</li>
+              <li>&#8226; Include at least one number</li>
+              </ul>
+              </div>
+
+
+
             </div>
 
             

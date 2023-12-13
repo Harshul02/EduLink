@@ -165,6 +165,14 @@ const CompanyRegister = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <div style={{ marginTop: '8px', color: '#007bff', fontWeight: 'bold' }}>
+                    <ul style={{ listStyleType: 'none', paddingInlineStart: '0' }}>
+                    <li>&#8226; At least 8 characters long</li>
+                    <li>&#8226; Include at least one uppercase letter</li>
+                    <li>&#8226; Include at least one special character (e.g., !, @, #, $)</li>
+                    <li>&#8226; Include at least one number</li>
+                   </ul>
+                 </div>
                 </div>
 
                 <div className="form-group mb-4">
