@@ -90,11 +90,11 @@ const CompanyRegister = () => {
                 <h2
                   className="mb-4"
                   style={{
-                    fontSize: '2.5rem', /* Increase font size */
-                    fontWeight: 'bold', /* Add font weight */
-                    color: '#007bff', /* Change heading color */
-                    borderBottom: '2px solid #007bff', /* Add underline effect */
-                    paddingBottom: '0.5rem', /* Add some spacing at the bottom */
+                    fontSize: '2.5rem', 
+                    fontWeight: 'bold', 
+                    color: '#007bff', 
+                    borderBottom: '2px solid #007bff', 
+                    paddingBottom: '0.5rem',
                   }}
                 >
                   Company Registration
@@ -165,6 +165,14 @@ const CompanyRegister = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <div style={{ marginTop: '8px', color: '#007bff', fontWeight: 'bold' }}>
+                    <ul style={{ listStyleType: 'none', paddingInlineStart: '0' }}>
+                    <li>&#8226; At least 8 characters long</li>
+                    <li>&#8226; Include at least one uppercase letter</li>
+                    <li>&#8226; Include at least one special character (e.g., !, @, #, $)</li>
+                    <li>&#8226; Include at least one number</li>
+                   </ul>
+                 </div>
                 </div>
 
                 <div className="form-group mb-4">
