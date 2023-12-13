@@ -18,6 +18,7 @@ const CollegeRegister = () => {
   const [passwordPattern, setPasswordPattern] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const collegeTypes = ["University", "College", "Other"];
 
   const [avatar , setAvatar] = useState("");
 
@@ -43,6 +44,11 @@ const CollegeRegister = () => {
     e.preventDefault();
     try {
       setLoading(true);
+      if(!passwordPattern || phone.length < 12){
+        toast.error("Please fill all the fields carefully");
+        return;
+      }
+      
       const values = {collegeName, collegeType, contactPerson, email, password, phone , avatar};
       const response = await axios.post("/api/college/register", values);
       if (response.data.success) {
@@ -51,6 +57,8 @@ const CollegeRegister = () => {
       } else {
         toast.error(response.data.message);
       }
+    
+
     } catch (error) {
       toast.error(error.message);
     }
@@ -62,21 +70,20 @@ const CollegeRegister = () => {
 const handleChange = (value) => {
   setPhone(value);
 };
-// const validatePassword = (password) => {
-//   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-//   return passwordRegex.test(password);
-// };
-// const passwordMatch = (value)=>{
-//   setPassword(value);
-//   if (!validatePassword(value)) {
-//     setPasswordPattern(false);
-//   }
-//   else{
-//     setPasswordPattern(true);
-//   }
 
+const validatePassword = (e) => {
+  setPassword(e.target.value)
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  const p =  passwordRegex.test(password);
+  if (!p) {
+            setPasswordPattern(false);
+          }
+  else{
+        setPasswordPattern(true);
+      }
 
-// }
+}
+
 
 
  
@@ -133,19 +140,31 @@ const handleChange = (value) => {
                 </div>
 
                 <div className="form-group mb-4">
-                  <input
-                    type='text'
-                    id="collegeType"
-                    className="form-control form-control-lg"
-                    placeholder="College Type"
-                    required
-                    value={collegeType}
-                    onChange={(e) => setCollegeType(e.target.value)}
-                    
-                  >
-                  </input>
-                </div>
-
+                    <select
+                      className="form-control form-control-lg"
+                      id="collegeType"
+                      required
+                      value={collegeType}
+                      style={{
+                        width: '100%',
+                        padding: '0.375rem 0.75rem',
+                        fontSize: '1rem',
+                        lineHeight: '1.5',
+                        color: '#495057',
+                        backgroundColor: 'light-blue',
+                        backgroundClip: 'padding-box',
+                        border: '1px solid #ced4da',
+                        borderRadius: '0.25rem',
+                        transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+                      }}
+                      onChange={(e) => setCollegeType(e.target.value)}
+                    >
+                      <option value="" disabled>Select College Type</option>
+                      {collegeTypes.map((type, index) => (
+                        <option key={index} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
                 <div className="form-group mb-4">
                   <input
                     type='text'
@@ -183,28 +202,14 @@ const handleChange = (value) => {
                 placeholder="Create Password"
                 required
                 value={password}
-                onChange={
-                  (e)=>{setPassword(e.target.value)
-                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-                    const p =  passwordRegex.test(password);
-                    if (!p) {
-                      setPasswordPattern(false);
-                    }
-                    else{
-                      setPasswordPattern(true);
-                    }
-                  }
-                 
-
-                
-                }
+                onChange={validatePassword}
 
               />
                   {!passwordPattern  || password==='' ?  <div className="alert alert-danger mt-3" role="alert">
-                     password not matching with pattern.
+                     please enter password with below instructions.
                     </div>:
                     <div className="alert alert-success mt-3" role="alert">
-                      password matched   with pattern. 
+                      success!. 
 
                     </div>
 
@@ -221,7 +226,7 @@ const handleChange = (value) => {
 
 
 
-            </div>
+               </div>
 
             
 

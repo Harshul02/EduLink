@@ -21,10 +21,6 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  countrycode:{
-    type: String,
-    required: true,
-  },
   phone: {
     type: String,
     required: true,
