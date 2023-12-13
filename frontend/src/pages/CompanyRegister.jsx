@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {motion as m} from "framer-motion";
-import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
@@ -13,8 +14,10 @@ const CompanyRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [passwordPattern, setPasswordPattern] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const companyTypes = ["Product Based", "Service Based", "Startup","Other"];
 
   const [avatar , setAvatar] = useState("");
 
@@ -40,6 +43,10 @@ const CompanyRegister = () => {
     e.preventDefault();
     try {
       setLoading(true);
+      if (!passwordPattern || phone.length < 12 ) {
+        toast.error("Please fill all the fields carefully");
+        return;
+      }
       const values = {companyName, companyType, contactPerson, email, password, phone,avatar};
       const response = await axios.post("/api/company/register", values);
       if (response.data.success) {
@@ -57,9 +64,27 @@ const CompanyRegister = () => {
     }
     
  };
+ const handleChange = (value) => {
+  setPhone(value);
+};
+
+
+console.log(phone);
+
+const validatePassword = (e) => {
+  setPassword(e.target.value)
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  const p =  passwordRegex.test(password);
+  if (!p) {
+            setPasswordPattern(false);
+          }
+  else{
+        setPasswordPattern(true);
+      }
+
+}
  
   return (
-    
     
     <>
     <Toaster />
@@ -80,9 +105,9 @@ const CompanyRegister = () => {
               <form
                 className="p-4 bg-white rounded shadow-sm"
                 style={{
-                  color: '#333', /* Change font color */
-                  backgroundColor: '#f9f9f9', /* Change form background color */
-                  border: '1px solid #ccc', /* Add a border */
+                  color: '#333',
+                  backgroundColor: '#f9f9f9', 
+                  border: '1px solid #ccc', 
                 }}
                 onSubmit={companyregisterHandler}
 
@@ -113,19 +138,31 @@ const CompanyRegister = () => {
                 </div>
 
                 <div className="form-group mb-4">
-                  <input
-                    type="text"
-                    id="companyType"
-                    placeholder='Company Type'
-                    className="form-control form-control-lg"
-                    required
-                    value={companyType}
-                    onChange={(e) => setCompanyType(e.target.value)}
-                  >
-                   
-                  </input>
-                </div>
-
+                    <select
+                      className="form-control form-control-lg"
+                      id="companyType"
+                      required
+                      value={companyType}
+                      style={{
+                        width: '100%',
+                        padding: '0.375rem 0.75rem',
+                        fontSize: '1rem',
+                        lineHeight: '1.5',
+                        color: '#495057',
+                        backgroundColor: 'light-blue',
+                        backgroundClip: 'padding-box',
+                        border: '1px solid #ced4da',
+                        borderRadius: '0.25rem',
+                        transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+                      }}
+                      onChange={(e) => setCompanyType(e.target.value)}
+                    >
+                      <option value="" disabled>Select Company Type</option>
+                      {companyTypes.map((type, index) => (
+                        <option key={index} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
                 <div className="form-group mb-4">
                   <input
                     type="text"
@@ -155,37 +192,57 @@ const CompanyRegister = () => {
                     </div>
                   )}
 
-                <div className="form-group mb-4">
-                  <input
-                    type="password"
-                    id="password"
-                    className="form-control form-control-lg"
-                    placeholder="Create Password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <div style={{ marginTop: '8px', color: '#007bff', fontWeight: 'bold' }}>
-                    <ul style={{ listStyleType: 'none', paddingInlineStart: '0' }}>
-                    <li>&#8226; At least 8 characters long</li>
-                    <li>&#8226; Include at least one uppercase letter</li>
-                    <li>&#8226; Include at least one special character (e.g., !, @, #, $)</li>
-                    <li>&#8226; Include at least one number</li>
-                   </ul>
-                 </div>
-                </div>
+<div className="form-group mb-4">
+              <input
+                type="password"
+                id="password"
+                className="form-control form-control-lg"
+                placeholder="Create Password"
+                required
+                value={password}
+                onChange={validatePassword}
 
-                <div className="form-group mb-4">
-                  <input
-                    type="tel"
-                    id="phone"
-                    className="form-control form-control-lg"
-                    placeholder="Phone Number"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
+              />
+                  {!passwordPattern  || password==='' ?  <div className="alert alert-danger mt-3" role="alert">
+                     please enter password with below instructions.
+                    </div>:
+                    <div className="alert alert-success mt-3" role="alert">
+                      success!. 
+
+                    </div>
+
+              }    
+
+              <div style={{textAlign:'center', marginTop: '8px', color: '#007bff', fontWeight: 'bold' }}>
+              <ul style={{ listStyleType: 'none', display:'inline-block' , textAlign:'left' }}>
+              <li>&#8226; At least 8 characters long</li>
+              <li>&#8226; Include at least one uppercase letter</li>
+              <li>&#8226; Include at least one special character (e.g., !, @, #, $)</li>
+              <li>&#8226; Include at least one number</li>
+              </ul>
+              </div>
+
+
+
+               </div>
+
+
+               <div className="form-group mb-4">
+            <PhoneInput
+             id="phone"
+             country={'in'}
+             placeholder="Phone Number"
+             required
+             value={phone}
+             onChange={handleChange}
+             inputProps={{
+              required: true,
+              style: { width: '100%' }
+              }}
+             />
+
+                  
+              </div>  
                 <div className="form-group mb-4">
                 <img src ="./assets/images/bg1.png"alt = 'avatarPreview'
                 style={{ width: '450px', height: '150px', position: 'relative', marginBottom: '20px' }}
