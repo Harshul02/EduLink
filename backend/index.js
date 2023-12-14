@@ -13,8 +13,6 @@ const PORT = process.env.PORT || 5000;
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-
-// Import necessary routes and models
 const collegeRoute = require('./routes/collegeRoute');
 const companyRoute = require('./routes/companyRoute');
 const chatRoute = require('./routes/chatRoute');
@@ -31,10 +29,6 @@ cloudinary.config({
 
 
 
-
-
-
-
 app.use('/api/college', collegeRoute);
 app.use('/api/company', companyRoute);
 app.use('/api/chat', chatRoute);
@@ -42,12 +36,12 @@ app.use('/api/tieup', tieupRoute);
 
 
 
-const userSockets = {}; // To store active sockets for each user
+const userSockets = {}; 
 io.on('connection', async (socket) => {
     console.log('A user connected');
 
     socket.on('setUser', async (userId) => {
-        userSockets[userId] = socket; // Store the user's socket
+        userSockets[userId] = socket; 
 
         // Fetch the chat history for the user from the database
         try {
@@ -84,7 +78,6 @@ io.on('connection', async (socket) => {
 
     socket.on('disconnect', () => {
         console.log('A user disconnected');
-        // Clean up the user's socket from userSockets object
         for (const userId in userSockets) {
             if (userSockets[userId] === socket) {
                 delete userSockets[userId];

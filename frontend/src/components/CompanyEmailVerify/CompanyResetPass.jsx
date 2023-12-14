@@ -1,17 +1,20 @@
+import React from "react";
 import { useEffect, useState, Fragment } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import success from "../EmailVerify/success.png";
 import axios from "axios";
+import CompanyResetPassword from "../../pages/CompanyResetPassword";
 
-const CompanyEmailVerify = () => {
+
+const CompanyResetPass = () => {
   const [validUrl, setValidUrl] = useState(true);
   const [countdown, setCountdown] = useState(5);
   const param = useParams();
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    const verifyEmailUrl = async () => {
+    const verifyEmail = async () => {
       try {
         const url = `/api/company/${param.id}/verify/${param.token}`;
         const { data } = await axios.get(url);
@@ -23,38 +26,35 @@ const CompanyEmailVerify = () => {
 
         return () => clearInterval(interval);
 
-
+       
       } catch (error) {
         console.log(error);
         setValidUrl(true);
       }
     };
-    verifyEmailUrl();
+    verifyEmail();
   }, [param, navigate]);
+
   useEffect(() => {
     if (countdown === 0) {
-      navigate("/companylogin");
+      setValidUrl(false)
     }
-  }, [countdown, navigate]);
+  }, [countdown]);
+
 
   return (
-    <div className={styles.container}>
-      {validUrl ? (
-        <>
-        
-          <img src={success} alt="success_img" className={styles.success_img} />
-          <h1>Company Email verified successfully</h1>
-          <p>Automatically Redirecting in {countdown}...</p>
-          <Link to="/companylogin">
-            <button className={styles.green_btn} disabled={countdown > 0}>Login</button>
-          </Link>
-          </>
-      
-      ) : (
-        <h1>404 Not Found</h1>
-      )}
-    </div>
+    <Fragment>
+    {validUrl ? (
+      <div className={styles.container}>
+        <img src={success} alt="success_img" className={styles.success_img} />
+        <h1>Company Email verified successfully</h1>
+        <p>Automatically Redirecting in {countdown}...</p>
+      </div>
+    ) : (
+       <CompanyResetPassword />
+    )}
+  </Fragment>
   );
 };
 
-export default CompanyEmailVerify;
+export default CompanyResetPass;

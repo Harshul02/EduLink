@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Redirection from '../components/Redirection';
 import {motion as m} from "framer-motion";
-import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import Loader from '../Loader/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
@@ -16,10 +15,12 @@ const CollegeRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [passwordPattern, setPasswordPattern] = useState("");
   const [verificationSent, setVerificationSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const collegeTypes = ["University", "College", "Other"];
 
   const [avatar , setAvatar] = useState("");
-  const navigate = useNavigate();
 
   const registerDataChange = (e)=>{
 
@@ -42,20 +43,47 @@ const CollegeRegister = () => {
   const registerHandler = async(e) => {
     e.preventDefault();
     try {
+      setLoading(true);
+      if(!passwordPattern || phone.length < 12){
+        toast.error("Please fill all the fields carefully");
+        return;
+      }
+      
       const values = {collegeName, collegeType, contactPerson, email, password, phone , avatar};
       const response = await axios.post("/api/college/register", values);
       if (response.data.success) {
         toast.success(response.data.message);
         setVerificationSent(true);
-
-        // navigate("/collegelogin");
       } else {
         toast.error(response.data.message);
       }
+    
+
     } catch (error) {
       toast.error(error.message);
     }
+    finally{
+      setLoading(false);
+    }
 };
+
+const handleChange = (value) => {
+  setPhone(value);
+};
+
+const validatePassword = (e) => {
+  setPassword(e.target.value)
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  const p =  passwordRegex.test(password);
+  if (!p) {
+            setPasswordPattern(false);
+          }
+  else{
+        setPasswordPattern(true);
+      }
+
+}
+
 
 
  
@@ -112,19 +140,31 @@ const CollegeRegister = () => {
                 </div>
 
                 <div className="form-group mb-4">
-                  <input
-                    type='text'
-                    id="collegeType"
-                    className="form-control form-control-lg"
-                    placeholder="College Type"
-                    required
-                    value={collegeType}
-                    onChange={(e) => setCollegeType(e.target.value)}
-                    
-                  >
-                  </input>
-                </div>
-
+                    <select
+                      className="form-control form-control-lg"
+                      id="collegeType"
+                      required
+                      value={collegeType}
+                      style={{
+                        width: '100%',
+                        padding: '0.375rem 0.75rem',
+                        fontSize: '1rem',
+                        lineHeight: '1.5',
+                        color: '#495057',
+                        backgroundColor: 'light-blue',
+                        backgroundClip: 'padding-box',
+                        border: '1px solid #ced4da',
+                        borderRadius: '0.25rem',
+                        transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+                      }}
+                      onChange={(e) => setCollegeType(e.target.value)}
+                    >
+                      <option value="" disabled>Select College Type</option>
+                      {collegeTypes.map((type, index) => (
+                        <option key={index} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
                 <div className="form-group mb-4">
                   <input
                     type='text'
@@ -162,26 +202,55 @@ const CollegeRegister = () => {
                 placeholder="Create Password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={validatePassword}
+
               />
-            </div>
+                  {!passwordPattern  || password==='' ?  <div className="alert alert-danger mt-3" role="alert">
+                     please enter password with below instructions.
+                    </div>:
+                    <div className="alert alert-success mt-3" role="alert">
+                      success!. 
+
+                    </div>
+
+              }    
+
+              <div style={{textAlign:'center', marginTop: '8px', color: '#007bff', fontWeight: 'bold' }}>
+              <ul style={{ listStyleType: 'none', display:'inline-block' , textAlign:'left' }}>
+              <li>&#8226; At least 8 characters long</li>
+              <li>&#8226; Include at least one uppercase letter</li>
+              <li>&#8226; Include at least one special character (e.g., !, @, #, $)</li>
+              <li>&#8226; Include at least one number</li>
+              </ul>
+              </div>
+
+
+
+               </div>
 
             
 
-                <div className="form-group mb-4">
-                  <input
-                    type="text"
-                    id="phone"
-                    className="form-control form-control-lg"
-                    placeholder="Phone Number"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
+            <div className="form-group mb-4">
+            <PhoneInput
+            id="phone"
+            country={'in'}
+             placeholder="Phone Number"
+             required
+             value={phone}
+             onChange={handleChange}
+             inputProps={{
+              required: true,
+              style: { width: '100%' }
+              }}
+             />
 
+                  
+              </div>    
                 <div className="form-group mb-4">
-                <img src ="./assets/images/bg1.png"alt = 'avatarPreview'/>
+                <img src ="./assets/images/bg1.png"
+                alt = 'avatarPreview'
+                style={{ width: '450px', height: '150px', position: 'relative', marginBottom: '20px' }}
+                />
                   <input
                     type="file"
                     className="form-control form-control-lg"
@@ -193,17 +262,28 @@ const CollegeRegister = () => {
 
               
 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{
-                    backgroundColor: '#007bff', /* Change button background color */
-                    borderColor: '#007bff', /* Change button border color */
-                  }}
-                >
-                  Sign Up
-                </button>
-
+                {loading ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Loader />
+                    </div>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg btn-block"
+                      style={{
+                        backgroundColor: '#007bff',
+                        borderColor: '#007bff',
+                      }}
+                    >
+                      Sign Up
+                    </button>
+                  )}
                 <p className="mt-4">
                   Already have an account?{' '}
                   <Link to="/collegelogin" className="text-primary">
