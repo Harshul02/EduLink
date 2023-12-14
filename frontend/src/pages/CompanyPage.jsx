@@ -79,7 +79,15 @@ const CompanyPage = () => {
     style={{ width: "100%", height: "100%" }}
   />
             </div>
-            <div className="profile-box" style={{ position: "absolute", transform: "translate(250%, -33%)", zIndex: '999', }}>
+            <div
+              className="profile-box"
+              style={{
+                position: "absolute",
+                transform: "translate(110%, -33%)",
+                zIndex: "999",
+                width:"250px"
+              }}
+            >
               <img src={company.avatar && company.avatar.url ? company.avatar.url : "./assets/images/bg1.png"} style={{ width: "130px", height: "130px" }} />
               <h3>{company.companyName}</h3>
               <p>{company.companyType}</p>
