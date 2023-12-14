@@ -50,23 +50,7 @@ const CompanyPage = () => {
       <Toaster />
       <div className="container-fluid p-0 position-relative">
         {isLoading?<NewLoader/>:
-
-        showModal ? (
-          <div className="modal fade show" style={{ display: 'block' }}>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">
-                    Welcome to the EduLink
-                  </h5>
-                </div>
-                <div className="modal-body">
-                  <CompanyDetails setModal={setShowModal} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
+        (
           <>
             <Navbar />
 
@@ -87,7 +71,7 @@ const CompanyPage = () => {
                 zIndex: "999",
                 width:"250px"
               }}
-            >
+            >
               <img src={company.avatar && company.avatar.url ? company.avatar.url : "./assets/images/bg1.png"} style={{ width: "130px", height: "130px" }} />
               <h3>{company.companyName}</h3>
               <p>{company.companyType}</p>

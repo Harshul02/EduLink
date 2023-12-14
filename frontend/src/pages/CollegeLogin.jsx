@@ -29,8 +29,12 @@
     const response = await axios.post("/api/college/login", values);
     if (response.data.success) {
       toast.success(response.data.message);
+      console.log(response.data);
       localStorage.setItem("collegetoken", response.data.data);
-      navigate("/collegepage");
+      if(response.data.user.firstLogin)
+        navigate("/add/collegedetails")
+      else
+        navigate("/collegepage");
     } else {
       toast.error(response.data.message);
     }
