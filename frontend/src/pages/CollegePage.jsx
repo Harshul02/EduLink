@@ -4,7 +4,7 @@ import { CollegeAbout, Tieups, CompanyHistory, Navbar, CompanyList, Stats } from
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import CollegeDetail from '../components/CollegeDetail';
-import NewLoader from '../Loader/NewLoader';
+import NewLoader from './NewLoader';
 
 const CollegePage = () => {
   const [showModal, setShowModal] = useState(false);

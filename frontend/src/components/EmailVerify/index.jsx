@@ -36,7 +36,7 @@ const EmailVerify = () => {
     if (countdown === 0) {
       navigate("/collegelogin");
     }
-  }, [countdown, navigate]);
+  }, [countdown]);
 
   return (
     <div className={styles.container}>
