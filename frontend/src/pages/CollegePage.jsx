@@ -57,23 +57,6 @@ const CollegePage = () => {
         <>
           <Toaster />
           <div className="container-fluid p-0 position-relative">
-            {showModal ? (
-              <div className="modal fade show" style={{ display: 'block' }}>
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header" style={{ margin: "0 auto" }}>
-                      <h5 className="modal-title" id="exampleModalLongTitle" style={{ margin: "0 auto" }}>
-                        Welcome to the EduLink
-                      </h5>
-                    </div>
-                    <div className="modal-body">
-                      <CollegeDetail setModal={setShowModal} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <>
                 <Navbar />
                 <div style={{ height: "50vh" }}>
                   <img
@@ -119,11 +102,9 @@ const CollegePage = () => {
                   {selectedItem === 'company' && <CompanyList />}
                   {selectedItem === 'statistics' && <Stats />}
                 </div>
-              </>
-            )}
-          </div>
-        </>
-      )}
+            </div>
+          </>
+        )}
     </>
   );
 };
