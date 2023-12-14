@@ -50,23 +50,7 @@ const CompanyPage = () => {
       <Toaster />
       <div className="container-fluid p-0 position-relative">
         {isLoading?<NewLoader/>:
-
-        showModal ? (
-          <div className="modal fade show" style={{ display: 'block' }}>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">
-                    Welcome to the EduLink
-                  </h5>
-                </div>
-                <div className="modal-body">
-                  <CompanyDetails setModal={setShowModal} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
+        (
           <>
             <Navbar />
 

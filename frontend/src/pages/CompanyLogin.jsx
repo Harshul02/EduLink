@@ -29,7 +29,10 @@ const CompanyLogin = () => {
     if (response.data.success) {
       toast.success(response.data.message);
       localStorage.setItem("companytoken", response.data.data);
-      navigate("/companypage");
+      if(response.data.user.firstLogin)
+        navigate("/add/companydetails")
+      else
+        navigate("/companypage");
     } else {
       toast.error(response.data.message);
     }
