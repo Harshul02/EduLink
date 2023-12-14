@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import NewLoader from "../Loader/NewLoader";
+import NewLoader from "../pages/NewLoader";
 import Marquee from "react-fast-marquee";
 import "swiper/css";
 import "swiper/css/free-mode";

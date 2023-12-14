@@ -24,10 +24,7 @@ const CollegeResetPass = () => {
           setCountdown((prevCountdown) => prevCountdown - 1);
         }, 1000);
 
-        setTimeout(() => {
-          clearInterval(interval);
-          setValidUrl(false);
-        }, 5000);
+        return () => clearInterval(interval);
       } catch (error) {
         console.log(error);
         setValidUrl(true);
@@ -35,6 +32,12 @@ const CollegeResetPass = () => {
     };
     verifyEmail();
   }, [param, navigate]);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      setValidUrl(false)
+    }
+  }, [countdown]);
 
   return (
     <Fragment>

@@ -4,7 +4,7 @@ import { About, Tieups, CollegeHistory, CollegeList, Navbar, Stats } from '../co
 import axios from 'axios';
 import CompanyDetails from '../components/CompanyDetails';
 import { Toaster } from 'react-hot-toast';
-import NewLoader from '../Loader/NewLoader';
+import NewLoader from './NewLoader';
 
 const CompanyPage = () => {
   const [selectedItem, setSelectedItem] = useState('about');
