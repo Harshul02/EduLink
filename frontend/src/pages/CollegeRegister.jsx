@@ -81,7 +81,6 @@ const validatePassword = (e) => {
   else{
         setPasswordPattern(true);
       }
-
 }
 
 
