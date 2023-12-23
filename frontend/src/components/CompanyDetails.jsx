@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import TagsInput from "react-tagsinput";
+import bg1 from "../animations/bg1.png";
 
 import "react-tagsinput/react-tagsinput.css";
 import { useNavigate } from "react-router-dom";
@@ -52,8 +53,8 @@ const CompanyDetails = () => {
 
   return (
     <div>
-      <div className="modal fade show" style={{ display: "block" }}>
-        <div className="modal-dialog modal-dialog-centered" role="document">
+     <div className="modal fade show" style={{ display: "block",backgroundImage: `url(${bg1})`, backgroundSize:"100% 100%", backgroundRepeat: "no-repeat",backdropFilter: "blur(5px)"  }}>                
+     <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">
