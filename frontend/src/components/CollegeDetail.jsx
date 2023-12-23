@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import TagsInput from "react-tagsinput";
-
 import "react-tagsinput/react-tagsinput.css";
 import { useNavigate } from "react-router-dom";
+import bg1 from "../animations/bg1.png";
 
 const CollegeDetail = () => {
 
@@ -52,8 +52,8 @@ const CollegeDetail = () => {
 
   return (
     <div>
-      <div className="modal fade show" style={{ display: "block" }}>
-        <div className="modal-dialog modal-dialog-centered" role="document">
+     <div className="modal fade show" style={{ display: "block",backgroundImage: `url(${bg1})`, backgroundSize:"100% 100%", backgroundRepeat: "no-repeat",backdropFilter: "blur(5px)"  }}>                
+     <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">
@@ -129,16 +129,7 @@ const CollegeDetail = () => {
                 </div>
                 <div className="form-group my-3">
                   <label htmlFor="domains">Courses Offered:</label>
-                  {/* <textarea
-            className="form-control"
-            name="domains"
-            id="domains"
-            cols="30"
-            rows="1"
-            value={formData.domains}
-            onChange={handleInputChange}
-            required
-          /> */}
+        
                   <TagsInput
                     value={formData.domains}
                     onChange={handleTagsChange}
